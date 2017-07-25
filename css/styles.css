@@ -1,0 +1,22 @@
+.action-count {
+  text-align: center;
+  background: skyblue;
+  font-family: sans-serif;
+  font-weight: bolder;
+}
+
+.buy-zone {
+  display: none;
+}
+
+.container {
+  width: 1500px;
+}
+
+#resources-remaining {
+  display: none;
+}
+
+h3 {
+  margin-top: 0px;
+}
