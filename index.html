@@ -2,7 +2,7 @@
 <html>
   <head>
     <script src="js/jquery-3.2.1.js"></script>
-    <script src="js/scripts2.js"></script>
+    <script src="js/scripts6.js"></script>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="css/styles.css" rel="stylesheet" type="text/css">
     <title>Dominion</title>
@@ -22,6 +22,11 @@
                 <li><button type="button" id="buy-phase1" class="btn btn-danger">Buy a Card</button><br></li>
                 <li><button type="button" id="end-turn1" class="btn btn-danger">End Turn</button><br></li>
               </ul>
+              <div id="resources-remaining">
+                Money Remaining: <span id = "money-counter"></span><br>
+                Actions Remaining: <span id = "action-counter"></span><br>
+                Buys Remaining: <span id = "buy-counter"></span>
+              </div>
             </div>
           </div>
           <div class="col-md-6">
@@ -48,13 +53,8 @@
               <div class="col-md-8 hand">
               </div>
               <div class="col-md-4">
-                <img src="img/deck.jpg" height="250px">
-                <img src="img/discard.jpg" height="250px">
-
-                <div id="resources-remaining">
-                  Money Remaining: <span id = "money-counter"></span><br>
-                  Buys Remaining: <span id = "buy-counter"></span>
-                </div>
+                <img src="img/deck.jpg" height="250px"><span id="deck-counter"></span>
+                <img src="img/discard.jpg" height="250px"><span id="discard-counter"></span>
               </div>
             </div>
           </div>

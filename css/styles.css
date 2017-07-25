@@ -20,3 +20,11 @@
 h3 {
   margin-top: 0px;
 }
+
+ul {
+  list-style: none;
+}
+
+li {
+  padding-bottom: 3px;
+}
