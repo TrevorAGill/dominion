@@ -1,11 +1,13 @@
 //Frontend
+turn = 1
 $(document).ready(function() {
   $("#newGame").click(function() {
+    var game = new Game();
     var allCards = createCards();
-    var game = new Game(allCards);
-    var player1Cards = player1.createDeck(allCards);
-    var player2Cards = player2.createDeck(allCards);
-    var currentCards =
+    game.player1.createDeck(allCards);
+    game.player2.createDeck(allCards);
+    var currentPlayer = asd(game);
+
 
 
 
@@ -64,7 +66,8 @@ $(document).ready(function() {
     $("#draw-hand1").click(function(event) {
       // document.getElementById("draw-hand1").disabled = true;
       debugger;
-      revealCardsInHand(player1Hand);
+      game.turn = 1
+      revealCardsInHand(game.player1.hand);
       $("#resources-remaining").show();
       var actionCount = 1;
       var buyCount = 1;
@@ -75,14 +78,14 @@ $(document).ready(function() {
       $("#deck-counter").text(player1Deck.length);
       $("#discard-counter").text(player1Discard.length);
 
-      $("#play-workshop").click(function() {
-        actionWorkshop();
-        $(".buy-zone").show();
-      });
-
-      $("#play-woodcutter").click(function() {
-        buyCount = actionWoodcutter(buyCount,moneyInHand);
-      });
+      // $("#play-workshop").click(function() {
+      //   actionWorkshop();
+      //   $(".buy-zone").show();
+      // });
+      //
+      // $("#play-woodcutter").click(function() {
+      //   buyCount = actionWoodcutter(buyCount,moneyInHand);
+      // });
 
     });
 
@@ -252,6 +255,7 @@ $(document).ready(function() {
 
     $("#end-turn1").click(function() {
       debugger;
+      game.turn = 2;
       $(".buy-zone").hide();
       var cardsInDeck = player1Deck.length;
       player1Discard = player1Discard.concat(player1Hand);
@@ -274,6 +278,20 @@ $(document).ready(function() {
 
 
 //Backend
+
+function asd(game){
+  if(game.turn = 1){
+    currentPlayer = game.player1;
+  } else if(game.turn = 2){
+    currentPlayer = game.player2;
+  }
+  return currentPlayer;
+}
+
+Game.prototype.deckToggle = function(player) {
+  alert(player);
+}
+
 function countHandMoney(player1Hand) {
   var moneyInHand = 0;
   debugger;
@@ -303,7 +321,7 @@ var j, x, i;
 
 Player.prototype.createDeck = function(allCards) {
   debugger;
-  var playerCards = [];
+  // var playerCards = [];
   var playerOneMoney = allCards[0].splice(0, 7);
   var shufflePile = playerOneMoney.concat(allCards[3].splice(0, 3));
   var j, x, i;
@@ -316,11 +334,12 @@ Player.prototype.createDeck = function(allCards) {
     this.deck = shufflePile;
     this.shufflePile = [];
     this.hand = this.deck.splice(0,5);
-    playerCards[0] = this.deck;
-    playerCards[1] = this.hand;
-    playerCards[2] = this.shufflePile;
     debugger;
-    return playerCards;
+    // playerCards[0] = this.deck;
+    // playerCards[1] = this.hand;
+    // playerCards[2] = this.shufflePile;
+    // debugger;
+    // return playerCards;
 }
 
 debugger;
@@ -649,21 +668,22 @@ function Action (name, actionsGranted, cardsGranted, buysGranted, moneyGranted, 
   this.type = type;
 }
 
-function Player (name, deck, hand, shufflePile, vpTotal) {
+function Player (name, deck, hand, shufflePile, vpTotal, turn) {
   this.name = name;
   this.deck = deck;
-      debugger;
   this.hand = hand;
   this.shufflePile = shufflePile;
   this.vpTotal = vpTotal;
+  this.turn = turn;
 }
 
 function Deck (cards) {
   this.cards = cards;
 }
 
-function Game (allCards) {
+function Game () {
   this.players = 2;
-  this.player1 = new Player("King Arthur",allCards[0].splice(0, 1),[],[],0);
-  this.player2 = new Player("Richard the Lionheart",[],[],[],0);
+  this.turn = 1
+  this.player1 = new Player("King Arthur",[],[],[],0,1);
+  this.player2 = new Player("Richard the Lionheart",[],[],[],0,0);
 }
