@@ -22,6 +22,7 @@ $(document).ready(function(){
     //   revealCardsInHand(player2Hand);
     // });
 
+    function updateCounters(postActionParameterArray)
     function revealCardsInHand(player1Hand) {
       debugger;
       for (i=0 ; i<player1Hand.length ; i++) {
@@ -200,8 +201,8 @@ $(document).ready(function(){
           debugger;
           postBuyParameters = buyWoodcutter(moneyInHand,allCards,player1Discard,buyCount);
           player1Discard = postBuyParameters[2];
-          $("#money-counter").text(postBuyParameters[0]);
-          $("#buy-counter").text(postBuyParameters[1]);
+          $("#money-counter").text(postBuyParameters[1]);
+          $("#buy-counter").text(postBuyParameters[0]);
         });
 
         $("#buy-workshop").unbind('click').click(function() {
@@ -617,10 +618,11 @@ function createCards() {
   function actionWoodcutter(buyCount,moneyInHand) {
     debugger;
     alert("+1 Buy, +2 Money")
-    buyCount += 1;
-    moneyInHand +=2;
+    var postBuyParameters = [];
+    postBuyParameters[0] = buyCount += 1;
+    postBuyParameters[1] = moneyInHand +=2;
     debugger;
-    return buyCount;
+    return postBuyParameters;
   }
 
   function actionMarket(player1Hand,deck) {
@@ -667,4 +669,10 @@ function Player (name, deck, hand, shufflePile, vpTotal) {
 
 function Deck (cards) {
   this.cards = cards;
+}
+
+function Turn (moneyInHand, actions, buys) {
+  this moneyInHand = moneyInHand;
+  this actions = actions;
+  this buys = buys;
 }
