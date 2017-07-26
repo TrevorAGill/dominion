@@ -4,6 +4,7 @@ $(document).ready(function(){
   $("#newGame").click(function(event) {
     var allCards = createCards();
     var player1 = new Player ("Harold",[],[],[],0);
+    debugger;
     var player2 = new Player ("Kumar",[],[],[],0);
     var player1Cards = player1.createDeck(allCards);
     var player1Deck = player1Cards[0]
@@ -96,8 +97,8 @@ $(document).ready(function(){
 
       $("#buy-phase1").click(function() {
         $(".buy-zone").show();
-        // buyCount = 1;
-        // moneyInHand = countHandMoney(player1Hand);
+        buyCount = 1;
+        moneyInHand = countHandMoney(player1Hand);
         $("#count-copper").text(countCopper);
         $("#count-silver").text(countSilver);
         $("#count-gold").text(countGold);
