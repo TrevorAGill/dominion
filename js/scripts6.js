@@ -1,18 +1,11 @@
 //Frontend
-$(document).ready(function(){
-
-  $("#newGame").click(function(event) {
+$(document).ready(function() {
+  $("#newGame").click(function() {
     var allCards = createCards();
-    var player1 = new Player ("Harold",[],[],[],0);
-    var player2 = new Player ("Kumar",[],[],[],0);
+    var game = new Game(allCards);
     var player1Cards = player1.createDeck(allCards);
-    var player1Deck = player1Cards[0]
-    var player1Hand = player1Cards[1]
-    var player1Discard = player1Cards[2]
     var player2Cards = player2.createDeck(allCards);
-    var player2Deck = player2Cards[0]
-    var player2Hand = player2Cards[1]
-    var player2Discard = player2Cards[2]
+    var currentCards =
 
 
 
@@ -659,6 +652,7 @@ function Action (name, actionsGranted, cardsGranted, buysGranted, moneyGranted, 
 function Player (name, deck, hand, shufflePile, vpTotal) {
   this.name = name;
   this.deck = deck;
+      debugger;
   this.hand = hand;
   this.shufflePile = shufflePile;
   this.vpTotal = vpTotal;
@@ -666,4 +660,10 @@ function Player (name, deck, hand, shufflePile, vpTotal) {
 
 function Deck (cards) {
   this.cards = cards;
+}
+
+function Game (allCards) {
+  this.players = 2;
+  this.player1 = new Player("King Arthur",allCards[0].splice(0, 1),[],[],0);
+  this.player2 = new Player("Richard the Lionheart",[],[],[],0);
 }
