@@ -4,16 +4,32 @@ $(document).ready(function(){
   $("#newGame").click(function(event) {
     var allCards = createCards();
     var player1 = new Player ("Harold",[],[],[],0);
-    debugger;
     var player2 = new Player ("Kumar",[],[],[],0);
+    var playerTurn = 1;
+
+
     var player1Cards = player1.createDeck(allCards);
-    var player1Deck = player1Cards[0]
-    var player1Hand = player1Cards[1]
-    var player1Discard = player1Cards[2]
+    var player1Deck = player1Cards[0];
+    var player1Hand = player1Cards[1];
+    var player1Discard = player1Cards[2];
     var player2Cards = player2.createDeck(allCards);
-    var player2Deck = player2Cards[0]
-    var player2Hand = player2Cards[1]
-    var player2Discard = player2Cards[2]
+    var player2Deck = player2Cards[0];
+    var player2Hand = player2Cards[1];
+    var player2Discard = player2Cards[2];
+
+
+    var currentDeck = [];
+    var currentHand = [];
+    var currentDiscard = [];
+    if(playerTurn = 1) {
+      currentDeck = player1Deck;
+      currentHand = player1Hand;
+      currentDiscard = player1Discard;
+    } else {
+      currentDeck = player2Deck;
+      currentHand = player2Hand;
+      currentDiscard = player2Discard;
+    }
 
 
 
@@ -22,7 +38,6 @@ $(document).ready(function(){
     //   revealCardsInHand(player2Hand);
     // });
 
-    function updateCounters(postActionParameterArray)
     function revealCardsInHand(player1Hand) {
       debugger;
       for (i=0 ; i<player1Hand.length ; i++) {
@@ -261,21 +276,10 @@ $(document).ready(function(){
 
     $("#end-turn1").click(function() {
       debugger;
+      redraw(player1Deck,player1Discard,player1Hand);
       $(".buy-zone").hide();
-      var cardsInDeck = player1Deck.length;
-      player1Discard = player1Discard.concat(player1Hand);
-      if(cardsInDeck >= 5) {
-        debugger;
-        player1Hand = player1Deck.splice(0,5);
-      } else if (cardsInDeck < 5) {
-        debugger
-        player1Hand = player1Deck.splice(0,cardsInDeck);
-        player1Deck = player1Shuffler(player1Discard);
-        player1Discard = [];
-        player1Hand = player1Hand.concat(player1Deck.splice(0,(5-cardsInDeck)))
-      }
       $(".hand").html("");
-      debugger;
+
     });
 
   });
@@ -283,6 +287,21 @@ $(document).ready(function(){
 
 
 //Backend
+function redraw(player1Deck,player1Discard,player1Hand) {
+  var cardsInDeck = player1Deck.length;
+  player1Discard = player1Discard.concat(player1Hand);
+  if(cardsInDeck >= 5) {
+    debugger;
+    player1Hand = player1Deck.splice(0,5);
+  } else if (cardsInDeck < 5) {
+    debugger
+    player1Hand = player1Deck.splice(0,cardsInDeck);
+    player1Deck = player1Shuffler(player1Discard);
+    player1Discard = [];
+    player1Hand = player1Hand.concat(player1Deck.splice(0,(5-cardsInDeck)))
+  }
+}
+
 function countHandMoney(player1Hand) {
   var moneyInHand = 0;
   debugger;
@@ -671,11 +690,11 @@ function Deck (cards) {
   this.cards = cards;
 }
 
-function Turn (moneyInHand, actions, buys) {
-  this moneyInHand = moneyInHand;
-  this actions = actions;
-  this buys = buys;
-}
+// function Turn (moneyInHand, actions, buys) {
+//   this moneyInHand = moneyInHand;
+//   this actions = actions;
+//   this buys = buys;
+// }
 
 function Game(player1,player2) {
   this.player1 = player1;
