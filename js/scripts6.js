@@ -3,14 +3,16 @@ turn = 1
 $(document).ready(function() {
   var allCards = createCards();
   var game = new Game(allCards);
-  game.player1.Shuffler();
-  game.player2.Shuffler();
+  game.player1.shuffler();
+  game.player2.shuffler();
 
-  $("#draw-hand1").click(function(event) {
-    game.player1.Draw();
-    document.getElementById("draw-hand1").disabled = true;
+  $("#draw-hand1").on('click', function(event) {
+    event.preventDefault();
+    debugger;
+    game.player1.draw();
     game.player1.revealCards();
     game.player1.calculateResources();
+    debugger;
     $("#resources-remaining").show();
     $("#money-counter").text(game.player1.moneyInHand);
     $("#action-counter").text(game.player1.actionCount);
@@ -21,22 +23,9 @@ $(document).ready(function() {
 
   $("#end-turn1").click(function() {
     debugger;
-    turn = 2;
+    game.player1.discardAndDraw();
     $(".buy-zone").hide();
-    var cardsInDeck = player1Deck.length;
-    player1Discard = player1Discard.concat(player1Hand);
-    if(cardsInDeck >= 5) {
-      debugger;
-      player1Hand = player1Deck.splice(0,5);
-    } else if (cardsInDeck < 5) {
-      debugger
-      player1Hand = player1Deck.splice(0,cardsInDeck);
-      player1Deck = player1Shuffler(player1Discard);
-      player1Discard = [];
-      player1Hand = player1Hand.concat(player1Deck.splice(0,(5-cardsInDeck)))
-    }
     $(".hand").html("");
-    debugger;
   });
 
   $("#buy-phase1").click(function() {
@@ -264,7 +253,7 @@ var countSmithy = 10;
 var countMarket = 10;
 var countMine = 10;
 
-Player.prototype.Shuffler = function() {
+Player.prototype.shuffler = function() {
 debugger;
 var j, x, i;
   for (i = this.shufflePile.length; i; i--) {
@@ -272,19 +261,40 @@ var j, x, i;
      x = this.shufflePile[i - 1];
      this.shufflePile[i - 1] = this.shufflePile[j];
      this.shufflePile[j] = x;
+     debugger;
+   }
      this.deck = this.shufflePile;
      this.shufflePile = [];
      debugger;
-     return this.deck;
+}
+
+Player.prototype.draw = function() {
+  debugger;
+  var cardsInDeck = this.deck.length;
+  if(this.deck.length >= 5) {
+    debugger;
+    this.hand = this.deck.splice(0,5);
+  } else if (this.deck.length < 5) {
+    debugger;
+    this.hand = this.deck.splice(0,cardsInDeck);
+    this.deck = this.shufflePile;
+    this.shufflePile = [];
+    this.hand = this.hand.concat(this.deck.splice(0,(5-cardsInDeck)))
+    debugger;
   }
 }
 
-Player.prototype.Draw = function() {
-  this.hand = this.deck.splice(0,5);
-  debugger;
+Player.prototype.discardAndDraw = function() {
+  this.shufflePile = this.shufflePile.concat(this.hand);
+  this.hand = [];
+  this.buyCount = 0;
+  this.actionCount = 0;
+  this.moneyInHand = 0;
+
 }
 
 Player.prototype.revealCards = function() {
+  debugger;
   for (i=0 ; i<this.hand.length ; i++) {
     if(this.hand[i].name === "Copper") {
       $(".hand").append("<img src='img/copper.jpg'>")
@@ -307,9 +317,11 @@ Player.prototype.revealCards = function() {
 }
 
 Player.prototype.calculateResources = function() {
+  debugger;
   this.buyCount = 1;
   this.actionCount = 1;
   for(i=0 ; i<this.hand.length ; i++) {
+    debugger;
     if(this.hand[i].type === "money") {
     this.moneyInHand += this.hand[i].value;
     }
