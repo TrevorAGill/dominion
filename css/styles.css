@@ -25,6 +25,36 @@ ul {
   list-style: none;
 }
 
+#screen2 {
+  display: none;
+}
+
+.hide {
+  display: none;
+}
+
+.screen1 {
+  margin-top: 20px;
+}
+
+#goal {
+  margin-bottom: 30px;
+}
+
+.form-control {
+  width: 300px;
+}
+
+#playerOneNameDisplay, #playerTwoNameDisplay {
+  color: green;
+  font-style: italic;
+}
+
+#basic-rules {
+  list-style: circle;
+  margin-bottom: 30px;
+}
+
 li {
   padding-bottom: 3px;
 }

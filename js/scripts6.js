@@ -1,10 +1,26 @@
 //Frontend
-turn = 1
 $(document).ready(function() {
-  var allCards = createCards();
-  var game = new Game(allCards);
-  game.player1.shuffler();
-  game.player2.shuffler();
+
+
+  $("#name-submit").click(function(event) {
+    var allCards = createCards();
+    var game = new Game(allCards);
+    game.player1.shuffler();
+    game.player2.shuffler();
+    game.player1.playerName = $("#PlayerOneName").val();
+    game.player2.playerName = $("#PlayerTwoName").val();
+    $("#playerOneNameDisplay").append(game.player1.playerName);
+    $("#playerTwoNameDisplay").append(game.player2.playerName);
+    $("#screen2").show();
+    $("#screen1").addClass("hide");
+
+
+    // $(".namewell").slideUp("slow");
+    // $(".gameBoard").show();
+    // $(".gameBoard").fadeIn("slow");
+    // // $(".gameBoard").slideDown("slow");
+    // $(".cube").show();
+  });
 
   $("#draw-hand1").on('click', function(event) {
     event.preventDefault();
@@ -699,8 +715,8 @@ function Pile (name) {
   this.name = name;
 }
 
-function Player (name, deck, hand, shufflePile, vpTotal, turn, actionCount, buyCount, moneyInHand) {
-  this.name = name;
+function Player (playerName, deck, hand, shufflePile, vpTotal, turn, actionCount, buyCount, moneyInHand) {
+  this.playerName = playerName;
   this.deck = deck;
   this.hand = hand;
   this.shufflePile = shufflePile;
