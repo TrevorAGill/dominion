@@ -51,10 +51,10 @@
                       </ul>
                     </div>
                     <div class="col-md-6">
-                      <div id="resources-remaining">
-                        Money Remaining: <span id = "money-counter"></span><br>
-                        Actions Remaining: <span id = "action-counter"></span><br>
-                        Buys Remaining: <span id = "buy-counter"></span>
+                      <div id="resources-remaining1">
+                        Money Remaining: <span id = "money-counter1"></span><br>
+                        Actions Remaining: <span id = "action-counter1"></span><br>
+                        Buys Remaining: <span id = "buy-counter1"></span>
                       </div>
                     </div>
                   </div>
@@ -62,12 +62,22 @@
               </div>
               <div class="col-md-6">
                 <div class="well player2-controls">
-                  <h3><span id="playerTwoNameDisplay"></span> controls</h3>
-                  <ul>
-                    <li><button type="button" id="draw-hand2" class="btn btn-danger">Draw Hand</button></li>
-                    <li><button type="button" id="buy-phase2" class="btn btn-danger">Buy Cards</button><br></li>
-                    <li><button type="button" id="end-turn2" class="btn btn-danger">End Turn</button><br></li>
-                  </ul>
+                  <div class="row">
+                    <div class="col-md-6">
+                    <h3><span id="playerTwoNameDisplay"></span> controls</h3>
+                    <ul>
+                      <li><button type="button" id="draw-hand2" class="btn btn-danger">Draw Hand</button></li>
+                      <li><button type="button" id="buy-phase2" class="btn btn-danger">Buy Cards</button><br></li>
+                      <li><button type="button" id="end-turn2" class="btn btn-danger">End Turn</button><br></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <div id="resources-remaining2">
+                      Money Remaining: <span id = "money-counter2"></span><br>
+                      Actions Remaining: <span id = "action-counter2"></span><br>
+                      Buys Remaining: <span id = "buy-counter2"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -91,7 +101,6 @@
             </div>
           </div>
         </div>
-
         <div class="panel panel-default">
           <div class="panel-heading">
             <h2 class="panel-title">Buy Zone</h2>

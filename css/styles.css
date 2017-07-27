@@ -13,7 +13,7 @@
   width: 1500px;
 }
 
-#resources-remaining {
+#resources-remaining1,#resources-remaining2 {
   margin-top: 26px;
   display: none;
   font-size: 20px;
