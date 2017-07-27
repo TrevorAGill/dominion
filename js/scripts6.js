@@ -5,12 +5,10 @@ $(document).ready(function() {
   var game = new Game(allCards);
   game.player1.Shuffler();
   game.player2.Shuffler();
-  debugger;
-  // game.player1.createDeck(allCards);
-  // game.player2.createDeck(allCards);
 
 
   $("#draw-hand1").click(function(event) {
+    game.player1.Draw();
     // document.getElementById("draw-hand1").disabled = true;
     debugger;
     game.turn = 1
@@ -316,6 +314,11 @@ var j, x, i;
      debugger;
      return this.deck;
   }
+}
+
+Player.prototype.Draw = function() {
+  this.hand = this.deck.splice(0,5);
+  debugger;
 }
 
 Player.prototype.createDeck = function(allCards) {
