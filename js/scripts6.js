@@ -28,6 +28,17 @@ $(document).ready(function() {
     $(".hand").html("");
   });
 
+  $(document).on('click','#play-market',function() {
+    game.player1.playMarket();
+    $("#money-counter").text(game.player1.moneyInHand);
+    $("#action-counter").text(game.player1.actionCount);
+    $("#action-counter").text(game.player1.actionCount);
+  });
+
+  $("#play-woodcutter").click(function() {
+    buyCount = actionWoodcutter(buyCount,moneyInHand);
+  });
+
   $("#buy-phase1").click(function() {
     $(".buy-zone").show();
     $("#count-copper").text(countCopper);
@@ -52,42 +63,42 @@ $(document).ready(function() {
     game.player1.buyCopper(allCards);
     $("#count-copper").text(countCopper);
     $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCounter);
+    $("#buy-counter").text(game.player1.buyCount);
   });
 
   $("#buy-silver").click(function() {
     game.player1.buySilver(allCards);
     $("#count-silver").text(countSilver);
     $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCounter);
+    $("#buy-counter").text(game.player1.buyCount);
   });
 
   $("#buy-gold").click(function() {
     game.player1.buyGold(allCards);
     $("#count-gold").text(countGold);
     $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCounter);
+    $("#buy-counter").text(game.player1.buyCount);
   });
 
   $("#buy-estate").click(function() {
     game.player1.buyEstate(allCards);
     $("#count-estate").text(countEstate);
     $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCounter);
+    $("#buy-counter").text(game.player1.buyCount);
   });
 
   $("#buy-duchey").click(function() {
     game.player1.buyDuchey(allCards);
     $("#count-duchey").text(countDuchey);
     $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCounter);
+    $("#buy-counter").text(game.player1.buyCount);
   });
 
   $("#buy-province").click(function() {
     game.player1.buyProvince(allCards);
     $("#count-province").text(countProvince);
     $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCounter);
+    $("#buy-counter").text(game.player1.buyCount);
   });
 
   $("#buy-cellar").click(function() {
@@ -161,12 +172,10 @@ $(document).ready(function() {
   });
 
   $("#buy-market").click(function() {
-    var buysLeft= buyMarket(moneyInHand,allCards,player1Discard,buyCount);
-    if(buysLeft < buyCount){
-    moneyInHand -= 5;
-    buyCount -= 1;
-    $("#money-counter").text(moneyInHand);
-    $("#buy-counter").text(buyCount);}
+    game.player1.buyMarket(allCards);
+    $("#count-market").text(countMarket);
+    $("#money-counter").text(game.player1.moneyInHand);
+    $("#buy-counter").text(game.player1.buyCount);
   });
 
   $("#buy-mine").click(function() {
@@ -177,6 +186,9 @@ $(document).ready(function() {
     $("#money-counter").text(moneyInHand);
     $("#buy-counter").text(buyCount);}
   });
+
+
+
 
 
 
@@ -312,6 +324,8 @@ Player.prototype.revealCards = function() {
       $(".hand").append("<input type='image' src='img/workshop.jpg' name='play-workshop' id='play-workshop'>")
     } else if(this.hand[i].name === "Woodcutter") {
       $(".hand").append("<input type='image' src='img/woodcutter.jpg' name='play-woodcutter' id='play-woodcutter'>")
+    } else if(this.hand[i].name === "Market") {
+      $(".hand").append("<input type='image' src='img/market.jpg' name='play-market' id='play-market'>")
     }
   }
 }
@@ -420,6 +434,33 @@ Player.prototype.buyProvince = function(allCards) {
   } else if (this.buyCount === 0) {
     alert("You don't have any buys remaining this turn");
   }
+}
+
+Player.prototype.buyMarket = function(allCards) {
+  if(countMarket > 0 && this.moneyInHand >= 5 && this.buyCount > 0) {
+    countMarket -= 1;
+    this.buyCount -= 1;
+    this.moneyInHand -= 5;
+    this.shufflePile = this.shufflePile.concat(allCards[14].splice(0, 1));
+    debugger;
+  } else if (countMarket === 0) {
+    alert("This card has been bought out.");
+  } else if (this.moneyInHand < 5) {
+    alert("You don't have enough money in your hand to buy this card.");
+  } else if (this.buyCount === 0) {
+    alert("You don't have any buys remaining this turn");
+  }
+}
+
+Player.prototype.playMarket = function() {
+  debugger;
+  this.hand = this.hand.concat(this.deck.splice(0,1));
+  this.buyCount += 1;
+  this.actionAcount += 1;
+  this.moneyInHand += 1;
+  debugger;
+  this.revealCards();
+  debugger;
 }
 
 function createCards() {
