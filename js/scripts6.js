@@ -23,7 +23,7 @@ $(document).ready(function() {
 
   $("#end-turn1").click(function() {
     debugger;
-    game.player1.discardAndDraw();
+    game.player1.discard();
     $(".buy-zone").hide();
     $(".hand").html("");
   });
@@ -265,7 +265,7 @@ var j, x, i;
    }
      this.deck = this.shufflePile;
      this.shufflePile = [];
-     debugger;
+     return this.deck;
 }
 
 Player.prototype.draw = function() {
@@ -277,14 +277,14 @@ Player.prototype.draw = function() {
   } else if (this.deck.length < 5) {
     debugger;
     this.hand = this.deck.splice(0,cardsInDeck);
-    this.deck = this.shufflePile;
+    this.deck = this.shuffler();
     this.shufflePile = [];
     this.hand = this.hand.concat(this.deck.splice(0,(5-cardsInDeck)))
     debugger;
   }
 }
 
-Player.prototype.discardAndDraw = function() {
+Player.prototype.discard = function() {
   this.shufflePile = this.shufflePile.concat(this.hand);
   this.hand = [];
   this.buyCount = 0;
