@@ -1,213 +1,19 @@
 //Frontend
-turn = 1
-$(document).ready(function() {
-  var allCards = createCards();
-  var game = new Game(allCards);
-  game.player1.Shuffler();
-  game.player2.Shuffler();
-  debugger;
-  // game.player1.createDeck(allCards);
-  // game.player2.createDeck(allCards);
+$(document).ready(function(){
 
-
-  $("#draw-hand1").click(function(event) {
-    // document.getElementById("draw-hand1").disabled = true;
+  $("#newGame").click(function(event) {
+    var allCards = createCards();
+    var player1 = new Player ("Harold",[],[],[],0);
     debugger;
-    game.turn = 1
-    revealCardsInHand(game.player1.hand);
-    $("#resources-remaining").show();
-    var actionCount = 1;
-    var buyCount = 1;
-    var moneyInHand = game.player1.countHandMoney(player.hand);
-    $("#money-counter").text(moneyInHand);
-    $("#action-counter").text(actionCount);
-    $("#buy-counter").text(buyCount);
-    $("#deck-counter").text(player1Deck.length);
-    $("#discard-counter").text(player1Discard.length);
-  });
-
-  $("#end-turn1").click(function() {
-    debugger;
-    turn = 2;
-    $(".buy-zone").hide();
-    var cardsInDeck = player1Deck.length;
-    player1Discard = player1Discard.concat(player1Hand);
-    if(cardsInDeck >= 5) {
-      debugger;
-      player1Hand = player1Deck.splice(0,5);
-    } else if (cardsInDeck < 5) {
-      debugger
-      player1Hand = player1Deck.splice(0,cardsInDeck);
-      player1Deck = player1Shuffler(player1Discard);
-      player1Discard = [];
-      player1Hand = player1Hand.concat(player1Deck.splice(0,(5-cardsInDeck)))
-    }
-    $(".hand").html("");
-    debugger;
-  });
-
-  $("#buy-phase1").click(function() {
-    $(".buy-zone").show();
-    // buyCount = 1;
-    // moneyInHand = countHandMoney(player1Hand);
-    $("#count-copper").text(countCopper);
-    $("#count-silver").text(countSilver);
-    $("#count-gold").text(countGold);
-    $("#count-estate").text(countEstate);
-    $("#count-duchey").text(countDuchey);
-    $("#count-province").text(countProvince);
-    $("#count-cellar").text(countCellar);
-    $("#count-moat").text(countMoat);
-    $("#count-village").text(countVillage);
-    $("#count-workshop").text(countWorkshop);
-    $("#count-woodcutter").text(countWoodcutter);
-    $("#count-smithy").text(countSmithy);
-    $("#count-remodel").text(countRemodel);
-    $("#count-militia").text(countMilitia);
-    $("#count-market").text(countMarket);
-    $("#count-mine").text(countMine);
-
-    $("#buy-copper").click(function() {
-      var buysLeft= buyCopper(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 0;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-silver").unbind('click').click(function() {
-      debugger;
-      postBuyParameters = buySilver(moneyInHand,allCards,player1Discard,buyCount);
-      player1Discard = postBuyParameters[2];
-      $("#money-counter").text(postBuyParameters[0]);
-      $("#buy-counter").text(postBuyParameters[1]);
-    });
-
-    $("#buy-gold").click(function() {
-      var buysLeft= buyGold(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 6;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-estate").click(function() {
-      var buysLeft= buyEstate(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 2;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-duchey").click(function() {
-      var buysLeft= buyDuchey(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 5;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-province").click(function() {
-      var buysLeft= buyProvince(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 8;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-cellar").click(function() {
-      var buysLeft= buyCellar(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 2;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-moat").click(function() {
-      var buysLeft= buyMoat(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 2;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-village").click(function() {
-      var buysLeft= buyVillage(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 3;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-woodcutter").unbind('click').click(function() {
-      debugger;
-      postBuyParameters = buyWoodcutter(moneyInHand,allCards,player1Discard,buyCount);
-      player1Discard = postBuyParameters[2];
-      $("#money-counter").text(postBuyParameters[0]);
-      $("#buy-counter").text(postBuyParameters[1]);
-    });
-
-    $("#buy-workshop").unbind('click').click(function() {
-      debugger;
-      postBuyParameters = buyWorkshop(moneyInHand,allCards,player1Discard,buyCount);
-      player1Discard = postBuyParameters[2];
-      $("#money-counter").text(postBuyParameters[0]);
-      $("#buy-counter").text(postBuyParameters[1]);
-    });
-
-    $("#buy-militia").click(function() {
-      var buysLeft= buyMilitia(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 4;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-remodel").click(function() {
-      var buysLeft= buyRemodel(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 4;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-smithy").click(function() {
-      var buysLeft= buySmithy(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 4;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-market").click(function() {
-      var buysLeft= buyMarket(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 5;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-
-    $("#buy-mine").click(function() {
-      var buysLeft= buyMine(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 5;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
-  });
+    var player2 = new Player ("Kumar",[],[],[],0);
+    var player1Cards = player1.createDeck(allCards);
+    var player1Deck = player1Cards[0]
+    var player1Hand = player1Cards[1]
+    var player1Discard = player1Cards[2]
+    var player2Cards = player2.createDeck(allCards);
+    var player2Deck = player2Cards[0]
+    var player2Hand = player2Cards[1]
+    var player2Discard = player2Cards[2]
 
 
 
@@ -259,68 +65,255 @@ $(document).ready(function() {
     //     }
     //   }
     // }
+    $(".btn-danger").show();
+
+
+
+    $("#draw-hand1").click(function(event) {
+      // document.getElementById("draw-hand1").disabled = true;
+      debugger;
+      var newTurn = new Turn()
+      revealCardsInHand(player1Hand);
+      $("#resources-remaining").show();
+      var actionCount = 1;
+      var buyCount = 1;
+      var moneyInHand = countHandMoney(player1Hand);
+      $("#money-counter").text(moneyInHand);
+      $("#action-counter").text(actionCount);
+      $("#buy-counter").text(buyCount);
+      $("#deck-counter").text(player1Deck.length);
+      $("#discard-counter").text(player1Discard.length);
+
+      $("#play-workshop").click(function() {
+        actionWorkshop();
+        $(".buy-zone").show();
+      });
+
+      $("#play-woodcutter").click(function() {
+        buyCount = actionWoodcutter(buyCount,moneyInHand);
+      });
 
 
 
 
+      $("#buy-phase1").click(function() {
+        $(".buy-zone").show();
+        // buyCount = 1;
+        // moneyInHand = countHandMoney(player1Hand);
+        $("#count-copper").text(countCopper);
+        $("#count-silver").text(countSilver);
+        $("#count-gold").text(countGold);
+        $("#count-estate").text(countEstate);
+        $("#count-duchey").text(countDuchey);
+        $("#count-province").text(countProvince);
+        $("#count-cellar").text(countCellar);
+        $("#count-moat").text(countMoat);
+        $("#count-village").text(countVillage);
+        $("#count-workshop").text(countWorkshop);
+        $("#count-woodcutter").text(countWoodcutter);
+        $("#count-smithy").text(countSmithy);
+        $("#count-remodel").text(countRemodel);
+        $("#count-militia").text(countMilitia);
+        $("#count-market").text(countMarket);
+        $("#count-mine").text(countMine);
 
-      // $("#play-workshop").click(function() {
-      //   actionWorkshop();
-      //   $(".buy-zone").show();
-      // });
-      //
-      // $("#play-woodcutter").click(function() {
-      //   buyCount = actionWoodcutter(buyCount,moneyInHand);
-      // });
+        $("#buy-copper").click(function() {
+          var buysLeft= buyCopper(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 0;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
 
+        $("#buy-silver").unbind('click').click(function() {
+          debugger;
+          postBuyParameters = buySilver(moneyInHand,allCards,player1Discard,buyCount);
+          player1Discard = postBuyParameters[2];
+          $("#money-counter").text(postBuyParameters[0]);
+          $("#buy-counter").text(postBuyParameters[1]);
+        });
+
+        $("#buy-gold").click(function() {
+          var buysLeft= buyGold(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 6;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+
+        $("#buy-estate").click(function() {
+          var buysLeft= buyEstate(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 2;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+
+        $("#buy-duchey").click(function() {
+          var buysLeft= buyDuchey(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 5;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+
+        $("#buy-province").click(function() {
+          var buysLeft= buyProvince(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 8;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+
+        $("#buy-cellar").click(function() {
+          var buysLeft= buyCellar(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 2;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+
+        $("#buy-moat").click(function() {
+          var buysLeft= buyMoat(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 2;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+
+        $("#buy-village").click(function() {
+          var buysLeft= buyVillage(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 3;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+
+        $("#buy-woodcutter").unbind('click').click(function() {
+          debugger;
+          postBuyParameters = buyWoodcutter(allCards,player1Discard);
+          player1Discard = postBuyParameters[2];
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);
+        });
+
+        $("#buy-workshop").unbind('click').click(function() {
+          debugger;
+          postBuyParameters = buyWorkshop(moneyInHand,allCards,player1Discard,buyCount);
+          player1Discard = postBuyParameters[2];
+          $("#money-counter").text(postBuyParameters[0]);
+          $("#buy-counter").text(postBuyParameters[1]);
+        });
+
+        $("#buy-militia").click(function() {
+          var buysLeft= buyMilitia(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 4;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+
+        $("#buy-remodel").click(function() {
+          var buysLeft= buyRemodel(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 4;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+
+        $("#buy-smithy").click(function() {
+          var buysLeft= buySmithy(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 4;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+
+        $("#buy-market").click(function() {
+          var buysLeft= buyMarket(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 5;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+
+        $("#buy-mine").click(function() {
+          var buysLeft= buyMine(moneyInHand,allCards,player1Discard,buyCount);
+          if(buysLeft < buyCount){
+          moneyInHand -= 5;
+          buyCount -= 1;
+          $("#money-counter").text(moneyInHand);
+          $("#buy-counter").text(buyCount);}
+        });
+      });
+    });
+
+    $("#end-turn1").click(function() {
+      debugger;
+      $(".buy-zone").hide();
+      var cardsInDeck = player1Deck.length;
+      player1Discard = player1Discard.concat(player1Hand);
+      if(cardsInDeck >= 5) {
+        debugger;
+        player1Hand = player1Deck.splice(0,5);
+      } else if (cardsInDeck < 5) {
+        debugger
+        player1Hand = player1Deck.splice(0,cardsInDeck);
+        player1Deck = player1Shuffler(player1Discard);
+        player1Discard = [];
+        player1Hand = player1Hand.concat(player1Deck.splice(0,(5-cardsInDeck)))
+      }
+      $(".hand").html("");
+      debugger;
+    });
+
+  });
 });
 
 
 //Backend
-
-function asd(game){
-  if(game.turn = 1){
-    currentPlayer = game.player1;
-  } else if(game.turn = 2){
-    currentPlayer = game.player2;
-  }
-  return currentPlayer;
-}
-
-Game.prototype.deckToggle = function(player) {
-  alert(player);
-}
-
-Player.prototype.countHandMoney = function(hand) {
+function countHandMoney(player1Hand) {
   var moneyInHand = 0;
   debugger;
-  for(i=0 ; i<game.player1.hand.length ; i++) {
-    if(game.player1.hand[i].name === "Copper" || game.player1.hand[i].name === "Silver" || game.player1.hand[i].name === "Gold") {
-    moneyInHand += game.player1.hand[i].value;
+  for(i=0 ; i<player1Hand.length ; i++) {
+    if(player1Hand[i].name === "Copper" || player1Hand[i].name === "Silver" || player1Hand[i].name === "Gold") {
+    moneyInHand += player1Hand[i].value;
     }
   }
   debugger;
   return moneyInHand;
 }
 
-Player.prototype.Shuffler = function() {
+function player1Shuffler(player1Discard) {
 debugger;
 var j, x, i;
-  for (i = this.shufflePile.length; i; i--) {
+  for (i = player1Discard.length; i; i--) {
      j = Math.floor(Math.random() * i);
-     x = this.shufflePile[i - 1];
-     this.shufflePile[i - 1] = this.shufflePile[j];
-     this.shufflePile[j] = x;
-     this.deck = this.shufflePile;
-     this.shufflePile = [];
+     x = player1Discard[i - 1];
+     player1Discard[i - 1] = player1Discard[j];
+     player1Discard[j] = x;
+     player1Deck = player1Discard;
+     player1Discard = [];
      debugger;
-     return this.deck;
+     return player1Deck;
   }
 }
 
 Player.prototype.createDeck = function(allCards) {
   debugger;
-  // var playerCards = [];
+  var playerCards = [];
   var playerOneMoney = allCards[0].splice(0, 7);
   var shufflePile = playerOneMoney.concat(allCards[3].splice(0, 3));
   var j, x, i;
@@ -333,12 +326,11 @@ Player.prototype.createDeck = function(allCards) {
     this.deck = shufflePile;
     this.shufflePile = [];
     this.hand = this.deck.splice(0,5);
+    playerCards[0] = this.deck;
+    playerCards[1] = this.hand;
+    playerCards[2] = this.shufflePile;
     debugger;
-    // playerCards[0] = this.deck;
-    // playerCards[1] = this.hand;
-    // playerCards[2] = this.shufflePile;
-    // debugger;
-    // return playerCards;
+    return playerCards;
 }
 
 debugger;
@@ -626,11 +618,13 @@ function createCards() {
 
   function actionWoodcutter(buyCount,moneyInHand) {
     debugger;
-    alert("+1 Buy, +2 Money")
+    alert("+1 Buy, +2 Money");
+    // postBuyParameters[0] = buyCount += 1;
+    // postBuyParameters[1] = moneyInHand +=2;
     buyCount += 1;
-    moneyInHand +=2;
+    moneyInHand += 2;
     debugger;
-    return buyCount;
+    // return postBuyParameters;
   }
 
   function actionMarket(player1Hand,deck) {
@@ -667,26 +661,27 @@ function Action (name, actionsGranted, cardsGranted, buysGranted, moneyGranted, 
   this.type = type;
 }
 
-function Pile (name) {
-  this.name = name;
-}
-
-function Player (name, deck, hand, shufflePile, vpTotal, turn) {
+function Player (name, deck, hand, shufflePile, vpTotal) {
   this.name = name;
   this.deck = deck;
   this.hand = hand;
   this.shufflePile = shufflePile;
   this.vpTotal = vpTotal;
-  this.turn = turn;
 }
 
 function Deck (cards) {
   this.cards = cards;
 }
 
-function Game (allCards) {
-  this.players = 2;
-  this.turn = 1
-  this.player1 = new Player("King Arthur",[],[],allCards[3].splice(0,3).concat(allCards[0].splice(0,7)),0,1);
-  this.player2 = new Player("Richard the Lionheart",[],[],allCards[3].splice(0,3).concat(allCards[0].splice(0,7)),0,0);
+function Turn (hand, moneyInHand, actions, buys) {
+  this.hand = hand;
+  this.moneyInHand = moneyInHand;
+  this.actions = actions;
+  this.buys = buys;
+}
+
+function Game(name) {
+  this.name = name;
+  this.player1 = new Player();
+  this.player2 = new Player();
 }
