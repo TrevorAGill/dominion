@@ -41,16 +41,22 @@
             <div class = "row">
               <div class="col-md-6">
                 <div class="well player1-controls">
-                  <h3><span id="playerOneNameDisplay"></span> controls</h3>
-                  <ul>
-                    <li><button type="button" id="draw-hand1" class="btn btn-danger">Draw Hand</button></li>
-                    <li><button type="button" id="buy-phase1" class="btn btn-danger">Buy Cards</button><br></li>
-                    <li><button type="button" id="end-turn1" class="btn btn-danger">End Turn</button><br></li>
-                  </ul>
-                  <div id="resources-remaining">
-                    Money Remaining: <span id = "money-counter"></span><br>
-                    Actions Remaining: <span id = "action-counter"></span><br>
-                    Buys Remaining: <span id = "buy-counter"></span>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h3><span id="playerOneNameDisplay"></span> controls</h3>
+                      <ul>
+                        <li><button type="button" id="draw-hand1" class="btn btn-danger">Draw Hand</button></li>
+                        <li><button type="button" id="buy-phase1" class="btn btn-danger">Buy Cards</button><br></li>
+                        <li><button type="button" id="end-turn1" class="btn btn-danger">End Turn</button><br></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">
+                      <div id="resources-remaining">
+                        Money Remaining: <span id = "money-counter"></span><br>
+                        Actions Remaining: <span id = "action-counter"></span><br>
+                        Buys Remaining: <span id = "buy-counter"></span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -77,7 +83,7 @@
               <div class="row">
                 <div class="col-md-8 hand">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 deck">
                   <img src="img/deck.jpg" height="250px"><span id="deck-counter"></span>
                   <img src="img/discard.jpg" height="250px"><span id="discard-counter"></span>
                 </div>

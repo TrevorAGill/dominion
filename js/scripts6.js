@@ -12,6 +12,9 @@ $(document).ready(function() {
     $("#playerTwoNameDisplay").append(game.player2.playerName);
     $("#screen2").show();
     $("#screen1").addClass("hide");
+    document.getElementById("end-turn2").disabled = true;
+    document.getElementById("draw-hand2").disabled = true;
+    document.getElementById("buy-phase2").disabled = true;
   });
 
   $("#draw-hand1").on('click', function(event) {
@@ -32,8 +35,15 @@ $(document).ready(function() {
   $("#end-turn1").click(function() {
     debugger;
     game.player1.discard();
+    $("#resources-remaining").hide();
     $(".buy-zone").hide();
     $(".hand").html("");
+    document.getElementById("end-turn1").disabled = true;
+    document.getElementById("draw-hand1").disabled = true;
+    document.getElementById("buy-phase1").disabled = true;
+    document.getElementById("end-turn2").disabled = false;
+    document.getElementById("draw-hand2").disabled = false;
+    document.getElementById("buy-phase2").disabled = false;
   });
 
   $("#draw-hand2").on('click', function(event) {
@@ -54,9 +64,16 @@ $(document).ready(function() {
   $("#end-turn2").click(function() {
     debugger;
     game.player2.discard();
+    $("#resources-remaining").hide();
     $(".buy-zone").hide();
     $(".hand").html("");
     game.turn = 1;
+    document.getElementById("end-turn2").disabled = true;
+    document.getElementById("draw-hand2").disabled = true;
+    document.getElementById("buy-phase2").disabled = true;
+    document.getElementById("end-turn1").disabled = false;
+    document.getElementById("draw-hand1").disabled = false;
+    document.getElementById("buy-phase1").disabled = false;
   });
 
   $(document).on('click','#play-market',function() {
@@ -529,6 +546,7 @@ Player.prototype.buyEstate = function(allCards) {
     this.buyCount -= 1;
     this.moneyInHand -= 2;
     this.shufflePile = this.shufflePile.concat(allCards[3].splice(0, 1));
+    this.vpTotal += 1
     debugger;
   } else if (countEstate === 0) {
     alert("This card has been bought out.");
@@ -545,6 +563,7 @@ Player.prototype.buyDuchey = function(allCards) {
     this.buyCount -= 1;
     this.moneyInHand -= 5;
     this.shufflePile = this.shufflePile.concat(allCards[4].splice(0, 1));
+    this.vpTotal += 3
     debugger;
   } else if (countDuchey === 0) {
     alert("This card has been bought out.");
@@ -556,19 +575,44 @@ Player.prototype.buyDuchey = function(allCards) {
 }
 
 Player.prototype.buyProvince = function(allCards) {
-  if(countProvince > 0 && this.moneyInHand >= 8 && this.buyCount > 0) {
+  if(countProvince === 0 && this.moneyInHand >= 8 && this.buyCount > 0) {
     countProvince -= 1;
     this.buyCount -= 1;
     this.moneyInHand -= 8;
     this.shufflePile = this.shufflePile.concat(allCards[5].splice(0, 1));
+    this.vpTotal += 6
     debugger;
-  } else if (countProvince === 0) {
-    alert("This card has been bought out.");
+  } else if (countProvince === 10) {
+    var winner = findWinner();
+    alert("The winner is " + winner);
   } else if (this.moneyInHand < 8) {
     alert("You don't have enough money in your hand to buy this card.");
   } else if (this.buyCount === 0) {
     alert("You don't have any buys remaining this turn");
   }
+}
+
+// Player.prototype.buyProvince = function(allCards) {
+//   if(countProvince >= 2 && this.moneyInHand >= 8 && this.buyCount > 0) {
+//     countProvince -= 1;
+//     this.buyCount -= 1;
+//     this.moneyInHand -= 8;
+//     this.shufflePile = this.shufflePile.concat(allCards[5].splice(0, 1));
+//     this.vpTotal += 6
+//     debugger;
+//   } else if (countProvince === 1) {
+//     var winner = findWinner();
+//     alert("This card has been bought out.");
+//   } else if (this.moneyInHand < 8) {
+//     alert("You don't have enough money in your hand to buy this card.");
+//   } else if (this.buyCount === 0) {
+//     alert("You don't have any buys remaining this turn");
+//   }
+// }
+
+function findWinner() {
+  debugger;
+
 }
 
 Player.prototype.buyMarket = function(allCards) {
