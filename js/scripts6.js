@@ -10,18 +10,17 @@ $(document).ready(function() {
   $("#draw-hand1").click(function(event) {
     game.player1.Draw();
     // document.getElementById("draw-hand1").disabled = true;
+    game.player1.revealCards();
     debugger;
-    game.turn = 1
-    revealCardsInHand(game.player1.hand);
-    $("#resources-remaining").show();
-    var actionCount = 1;
-    var buyCount = 1;
-    var moneyInHand = game.player1.countHandMoney(player.hand);
-    $("#money-counter").text(moneyInHand);
-    $("#action-counter").text(actionCount);
-    $("#buy-counter").text(buyCount);
-    $("#deck-counter").text(player1Deck.length);
-    $("#discard-counter").text(player1Discard.length);
+    // $("#resources-remaining").show();
+    // var actionCount = 1;
+    // var buyCount = 1;
+    // var moneyInHand = game.player1.countHandMoney(player.hand);
+    // $("#money-counter").text(moneyInHand);
+    // $("#action-counter").text(actionCount);
+    // $("#buy-counter").text(buyCount);
+    // $("#deck-counter").text(player1Deck.length);
+    // $("#discard-counter").text(player1Discard.length);
   });
 
   $("#end-turn1").click(function() {
@@ -214,27 +213,24 @@ $(document).ready(function() {
     //   revealCardsInHand(player2Hand);
     // });
 
-    function revealCardsInHand(player1Hand) {
-      debugger;
-      for (i=0 ; i<player1Hand.length ; i++) {
-        if(player1Hand[i].name === "Copper") {
+    Player.prototype.revealCards = function () {
+      for (i=0 ; i<this.hand.length ; i++) {
+        if(this.hand[i].name === "Copper") {
           $(".hand").append("<img src='img/copper.jpg'>")
-        } else if(player1Hand[i].name === "Silver") {
+        } else if(this.hand[i].name === "Silver") {
           $(".hand").append("<img src='img/silver.jpg'>")
-        } else if(player1Hand[i].name === "Gold") {
+        } else if(this.hand[i].name === "Gold") {
           $(".hand").append("<img src='img/gold.jpg'>")
-        } else if(player1Hand[i].name === "Estate") {
+        } else if(this.hand[i].name === "Estate") {
           $(".hand").append("<img src='img/estate.jpg'>")
-        } else if(player1Hand[i].name === "Duchey") {
+        } else if(this.hand[i].name === "Duchey") {
           $(".hand").append("<img src='img/duchey.jpg'>")
-        } else if(player1Hand[i].name === "Province") {
+        } else if(this.hand[i].name === "Province") {
           $(".hand").append("<img src='img/province.jpg'>")
-        } else if(player1Hand[i].name === "Workshop") {
+        } else if(this.hand[i].name === "Workshop") {
           $(".hand").append("<input type='image' src='img/workshop.jpg' name='play-workshop' id='play-workshop'>")
-        } else if(player1Hand[i].name === "Woodcutter") {
+        } else if(this.hand[i].name === "Woodcutter") {
           $(".hand").append("<input type='image' src='img/woodcutter.jpg' name='play-woodcutter' id='play-woodcutter'>")
-          // } else if(player1Hand[i].name === "Moat") {
-          //   $(".hand").append("<input type='image' src='img/cellar.jpg' name='play-cellar' id='play-cellar'/>")
         }
       }
     }
