@@ -249,6 +249,21 @@ $(document).ready(function() {
     }
   });
 
+  $("#buy-smithy").click(function() {
+    debugger;
+    if(game.player1.turn === 1) {
+      game.player1.buySmithy(allCards);
+      $("#count-smithy").text(countSmithy);
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#buy-counter1").text(game.player1.buyCount);
+    } else if(game.player2.turn === 1) {
+      game.player2.buySmithy(allCards);
+      $("#count-smithy").text(countSmithy);
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#buy-counter2").text(game.player2.buyCount);
+    }
+  });
+
   $("#buy-cellar").click(function() {
     var buysLeft= buyCellar(moneyInHand,allCards,player1Discard,buyCount);
     if(buysLeft < buyCount){
@@ -302,15 +317,6 @@ $(document).ready(function() {
     $("#buy-counter").text(buyCount);}
   });
 
-  $("#buy-smithy").click(function() {
-    var buysLeft= buySmithy(moneyInHand,allCards,player1Discard,buyCount);
-    if(buysLeft < buyCount){
-    moneyInHand -= 4;
-    buyCount -= 1;
-    $("#money-counter").text(moneyInHand);
-    $("#buy-counter").text(buyCount);}
-  });
-
   $("#buy-mine").click(function() {
     var buysLeft= buyMine(moneyInHand,allCards,player1Discard,buyCount);
     if(buysLeft < buyCount){
@@ -348,6 +354,22 @@ $(document).ready(function() {
     } else if (game.player2.turn === 1) {
       game.player2.playWoodcutter();
       document.getElementById("play-woodcutter").disabled = true;
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#action-counter2").text(game.player2.actionCount);
+      $("#buy-counter2").text(game.player2.buyCount);
+    }
+  });
+
+  $(document).on('click','#play-smithy',function() {
+    if(game.player1.turn === 1) {
+      game.player1.playSmithy();
+      document.getElementById("play-smithy").disabled = true;
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#action-counter1").text(game.player1.actionCount);
+      $("#buy-counter1").text(game.player1.buyCount);
+    } else if (game.player2.turn === 1) {
+      game.player2.playSmithy();
+      document.getElementById("play-smithy").disabled = true;
       $("#money-counter2").text(game.player2.moneyInHand);
       $("#action-counter2").text(game.player2.actionCount);
       $("#buy-counter2").text(game.player2.buyCount);
@@ -438,6 +460,8 @@ Player.prototype.revealCards = function() {
       $(".hand").append("<input type='image' src='img/woodcutter.jpg' name='play-woodcutter' id='play-woodcutter'>")
     } else if(this.hand[i].name === "Market") {
       $(".hand").append("<input type='image' src='img/market.jpg' name='play-market' id='play-market'>")
+    } else if(this.hand[i].name === "Smithy") {
+      $(".hand").append("<input type='image' src='img/smithy.jpg' name='play-smithy' id='play-smithy'>")
     }
   }
 }
@@ -463,6 +487,8 @@ Player.prototype.revealCardsFromAction = function(startingIndex) {
       $(".hand").append("<input type='image' src='img/woodcutter.jpg' name='play-woodcutter' id='play-woodcutter'>")
     } else if(this.hand[i].name === "Market") {
       $(".hand").append("<input type='image' src='img/market.jpg' name='play-market' id='play-market'>")
+    } else if(this.hand[i].name === "Smithy") {
+      $(".hand").append("<input type='image' src='img/smithy.jpg' name='play-smithy' id='play-smithy'>")
     }
   }
 }
@@ -623,6 +649,38 @@ Player.prototype.playWoodcutter = function() {
   this.buyCount += 1;
   this.moneyInHand += 2;
 }
+
+//Smithy prototypes
+Player.prototype.buySmithy = function(allCards) {
+  if(countSmithy > 0 && this.moneyInHand >= 4 && this.buyCount > 0) {
+    countSmithy -= 1;
+    this.buyCount -= 1;
+    this.moneyInHand -= 4;
+    this.shufflePile = this.shufflePile.concat(allCards[11].splice(0, 1));
+  } else if (countSmithy === 0) {
+    alert("This card has been bought out.");
+  } else if (this.moneyInHand < 4) {
+    alert("You don't have enough money in your hand to buy this card.");
+  } else if (this.buyCount === 0) {
+    alert("You don't have any buys remaining this turn");
+  }
+}
+
+Player.prototype.playSmithy = function() {
+  var startingIndex = this.hand.length
+  this.hand = this.hand.concat(this.deck.splice(0,3));
+  if(this.hand[(this.hand.length - 1)].type="money") {
+    this.moneyInHand += this.hand[(this.hand.length - 1)].value;
+  }
+  if(this.hand[(this.hand.length - 2)].type="money") {
+    this.moneyInHand += this.hand[(this.hand.length - 2)].value;
+  }
+  if(this.hand[(this.hand.length - 3)].type="money") {
+    this.moneyInHand += this.hand[(this.hand.length - 3)].value;
+  }
+  this.revealCardsFromAction(startingIndex);
+}
+
 
 function findWinner(player1VPs,player2VPs,player1Name,player2Name) {
   if(player1VPs > player2VPs) {
