@@ -80,24 +80,6 @@ $(document).ready(function() {
     document.getElementById("buy-phase1").disabled = false;
   });
 
-//Play Action Cards
-
-  $(document).on('click','#play-market',function() {
-    game.player1.playMarket();
-    document.getElementById("play-market").disabled = true;
-    $("#money-counter").text(game.player1.moneyInHand);
-    $("#action-counter").text(game.player1.actionCount);
-    $("#buy-counter").text(game.player1.buyCount);
-  });
-
-  $(document).on('click','#play-woodcutter',function() {
-    game.player1.playWoodcutter();
-    document.getElementById("play-woodcutter").disabled = true;
-    $("#money-counter").text(game.player1.moneyInHand);
-    $("#action-counter").text(game.player1.actionCount);
-    $("#buy-counter").text(game.player1.buyCount);
-  });
-
 //Buy Cards from Buy Zone
 
   $("#buy-phase1").click(function() {
@@ -144,13 +126,13 @@ $(document).ready(function() {
     if(game.player1.turn === 1) {
       game.player1.buyCopper(allCards);
       $("#count-copper").text(countCopper);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCount);
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#buy-counter1").text(game.player1.buyCount);
     } else if (game.player2.turn === 1) {
       game.player2.buyCopper(allCards);
       $("#count-copper").text(countCopper);
-      $("#money-counter").text(game.player2.moneyInHand);
-      $("#buy-counter").text(game.player2.buyCount);
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#buy-counter2").text(game.player2.buyCount);
     }
   });
 
@@ -158,13 +140,13 @@ $(document).ready(function() {
     if(game.player1.turn === 1) {
       game.player1.buySilver(allCards);
       $("#count-silver").text(countSilver);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCount);
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#buy-counter1").text(game.player1.buyCount);
     } else if (game.player2.turn === 1) {
       game.player2.buySilver(allCards);
       $("#count-silver").text(countSilver);
-      $("#money-counter").text(game.player2.moneyInHand);
-      $("#buy-counter").text(game.player2.buyCount);
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#buy-counter2").text(game.player2.buyCount);
     }
   });
 
@@ -172,13 +154,13 @@ $(document).ready(function() {
     if(game.player1.turn === 1) {
       game.player1.buyGold(allCards);
       $("#count-gold").text(countGold);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCount);
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#buy-counter1").text(game.player1.buyCount);
     } else if (game.player2.turn === 1) {
       game.player2.buyGold(allCards);
       $("#count-gold").text(countGold);
-      $("#money-counter").text(game.player2.moneyInHand);
-      $("#buy-counter").text(game.player2.buyCount);
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#buy-counter2").text(game.player2.buyCount);
     }
   });
 
@@ -186,13 +168,13 @@ $(document).ready(function() {
     if(game.player1.turn === 1) {
       game.player1.buyEstate(allCards);
       $("#count-estate").text(countEstate);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCount);
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#buy-counter1").text(game.player1.buyCount);
     } else if (game.player2.turn === 1) {
       game.player2.buyEstate(allCards);
       $("#count-estate").text(countEstate);
-      $("#money-counter").text(game.player2.moneyInHand);
-      $("#buy-counter").text(game.player2.buyCount);
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#buy-counter2").text(game.player2.buyCount);
     }
   });
 
@@ -200,13 +182,13 @@ $(document).ready(function() {
     if(game.player1.turn === 1) {
       game.player1.buyDuchey(allCards);
       $("#count-duchey").text(countDuchey);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCount);
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#buy-counter1").text(game.player1.buyCount);
     } else if (game.player2.turn === 1) {
       game.player2.buyDuchey(allCards);
       $("#count-duchey").text(countDuchey);
-      $("#money-counter").text(game.player2.moneyInHand);
-      $("#buy-counter").text(game.player2.buyCount);
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#buy-counter2").text(game.player2.buyCount);
     }
   });
 
@@ -214,8 +196,8 @@ $(document).ready(function() {
     if(game.player1.turn === 1) {
       game.player1.buyProvince(allCards);
       $("#count-province").text(countProvince);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCount);
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#buy-counter1").text(game.player1.buyCount);
       if(countProvince === 9) {
         var player1VPs = game.player1.vpTotal;
         var player2VPs = game.player2.vpTotal;
@@ -226,8 +208,8 @@ $(document).ready(function() {
     } else if (game.player2.turn === 1) {
       game.player2.buyProvince(allCards);
       $("#count-province").text(countProvince);
-      $("#money-counter").text(game.player2.moneyInHand);
-      $("#buy-counter").text(game.player2.buyCount);
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#buy-counter2").text(game.player2.buyCount);
       if(countProvince === 9) {
         var player1VPs = game.player1.vpTotal;
         var player2VPs = game.player2.vpTotal;
@@ -242,13 +224,13 @@ $(document).ready(function() {
     if(game.player1.turn === 1) {
       game.player1.buyMarket(allCards);
       $("#count-market").text(countMarket);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCount);
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#buy-counter1").text(game.player1.buyCount);
     } else if(game.player2.turn === 1) {
       game.player2.buyMarket(allCards);
       $("#count-market").text(countMarket);
-      $("#money-counter").text(game.player2.moneyInHand);
-      $("#buy-counter").text(game.player2.buyCount);
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#buy-counter2").text(game.player2.buyCount);
     }
   });
 
@@ -257,13 +239,13 @@ $(document).ready(function() {
     if(game.player1.turn === 1) {
       game.player1.buyWoodcutter(allCards);
       $("#count-woodcutter").text(countWoodcutter);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCount);
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#buy-counter1").text(game.player1.buyCount);
     } else if(game.player2.turn === 1) {
       game.player2.buyWoodcutter(allCards);
       $("#count-woodcutter").text(countWoodcutter);
-      $("#money-counter").text(game.player2.moneyInHand);
-      $("#buy-counter").text(game.player2.buyCount);
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#buy-counter2").text(game.player2.buyCount);
     }
   });
 
@@ -337,6 +319,41 @@ $(document).ready(function() {
     $("#money-counter").text(moneyInHand);
     $("#buy-counter").text(buyCount);}
   });
+
+//Play Action Cards
+
+  $(document).on('click','#play-market',function() {
+    if(game.player1.turn === 1) {
+      game.player1.playMarket();
+      document.getElementById("play-market").disabled = true;
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#action-counter1").text(game.player1.actionCount);
+      $("#buy-counter1").text(game.player1.buyCount);
+    } else if (game.player2.turn === 1) {
+      game.player2.playMarket();
+      document.getElementById("play-market").disabled = true;
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#action-counter2").text(game.player2.actionCount);
+      $("#buy-counter2").text(game.player2.buyCount);
+    }
+  });
+
+  $(document).on('click','#play-woodcutter',function() {
+    if(game.player1.turn === 1) {
+      game.player1.playWoodcutter();
+      document.getElementById("play-woodcutter").disabled = true;
+      $("#money-counter1").text(game.player1.moneyInHand);
+      $("#action-counter1").text(game.player1.actionCount);
+      $("#buy-counter1").text(game.player1.buyCount);
+    } else if (game.player2.turn === 1) {
+      game.player2.playWoodcutter();
+      document.getElementById("play-woodcutter").disabled = true;
+      $("#money-counter2").text(game.player2.moneyInHand);
+      $("#action-counter2").text(game.player2.actionCount);
+      $("#buy-counter2").text(game.player2.buyCount);
+    }
+  });
+
 });
 
 //Backend
