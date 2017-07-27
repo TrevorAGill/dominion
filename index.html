@@ -9,35 +9,37 @@
   </head>
   <body>
     <div class="container">
-      <div class="well">
-        <h1>Dominion</h1>
-        <button type="button" id="newGame" class="btn btn-primary">Let's Play!</button>
-        <div class = "row">
-          <div class="col-md-6">
-            <div class="well player1-controls">
-              <h3>player 1 controls</h1>
-              <ul>
-                <li><button type="button" id="draw-hand1" class="btn btn-danger">Draw Hand</button></li>
-                <li><button type="button" id="action-phase1" class="btn btn-danger">Play an Action</button></li>
-                <li><button type="button" id="buy-phase1" class="btn btn-danger">Buy a Card</button><br></li>
-                <li><button type="button" id="end-turn1" class="btn btn-danger">End Turn</button><br></li>
-              </ul>
-              <div id="resources-remaining">
-                Money Remaining: <span id = "money-counter"></span><br>
-                Actions Remaining: <span id = "action-counter"></span><br>
-                Buys Remaining: <span id = "buy-counter"></span>
+      <h1>Dominion</h1>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Player Controls</h3>
+        </div>
+        <div class="panel-body control-zone">
+          <div class = "row">
+            <div class="col-md-6">
+              <div class="well player1-controls">
+                <h3>player 1 controls</h1>
+                <ul>
+                  <li><button type="button" id="draw-hand1" class="btn btn-danger">Draw Hand</button></li>
+                  <li><button type="button" id="buy-phase1" class="btn btn-danger">Buy Cards</button><br></li>
+                  <li><button type="button" id="end-turn1" class="btn btn-danger">End Turn</button><br></li>
+                </ul>
+                <div id="resources-remaining">
+                  Money Remaining: <span id = "money-counter"></span><br>
+                  Actions Remaining: <span id = "action-counter"></span><br>
+                  Buys Remaining: <span id = "buy-counter"></span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="well player2-controls">
-              <h3>player 2 controls</h1>
-              <ul>
-                <li><button type="button" id="draw-hand2" class="btn btn-danger">Draw Hand</button></li>
-                <li><button type="button" id="action-phase2" class="btn btn-danger">Play an Action</button></li>
-                <li><button type="button" id="buy-phase2" class="btn btn-danger">Buy a Card</button><br></li>
-                <li><button type="button" id="end-turn2" class="btn btn-danger">End Turn</button><br></li>
-              </ul>
+            <div class="col-md-6">
+              <div class="well player2-controls">
+                <h3>player 2 controls</h1>
+                <ul>
+                  <li><button type="button" id="draw-hand2" class="btn btn-danger">Draw Hand</button></li>
+                  <li><button type="button" id="buy-phase2" class="btn btn-danger">Buy Cards</button><br></li>
+                  <li><button type="button" id="end-turn2" class="btn btn-danger">End Turn</button><br></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
