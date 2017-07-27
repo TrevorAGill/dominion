@@ -668,6 +668,10 @@ Player.prototype.buySmithy = function(allCards) {
 
 Player.prototype.playSmithy = function() {
   var startingIndex = this.hand.length
+  if(this.deck < 3) {
+    debugger;
+    this.shuffler();
+  }
   this.hand = this.hand.concat(this.deck.splice(0,3));
   if(this.hand[(this.hand.length - 1)].type="money") {
     this.moneyInHand += this.hand[(this.hand.length - 1)].value;

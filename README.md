@@ -62,6 +62,9 @@ _This is a recreation of the card game Dominion, written in HTML and Javascript.
 * _After playing a Woodcutter action card, a player should receive +2 money, +1 buy for that turn_
   * _Input: player1.buyCount = 1, player1.moneyInHand = 3_
   * _Output: player1.buyCount = 2, player1.moneyInHand = 5_
+* _After playing a Smithy action card, a player should receive +3 cards from the top of their deck_
+  * _Input: player1.hand.length = 5_
+  * _Output: player1.hand.length = 8_
 * _Once all 12 province cards have been purchased, victory points should be added up for both players and a winner declared_
   * _Input: provinceCount = 0_
   * _Output: "Player 1 has won the game with 72 victory points!"_
@@ -72,7 +75,7 @@ _This is a recreation of the card game Dominion, written in HTML and Javascript.
 
 ## Known Bugs
 
-_Most action cards in the base set are not yet supported. Support for additional action cards will be added over time_
+* _Most action cards in the base set are not yet supported. Currently only woodcutter, smithy, and market are supported. Support for the remaining action cards from the Dominion base set will be added in the near future_
 
 ## Support and contact details
 
