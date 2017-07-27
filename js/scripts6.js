@@ -46,136 +46,136 @@ $(document).ready(function() {
     $("#count-militia").text(countMilitia);
     $("#count-market").text(countMarket);
     $("#count-mine").text(countMine);
+  });
 
-    $("#buy-copper").click(function() {
-      game.player1.buyCopper(allCards);
-      $("#count-copper").text(countCopper);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCounter);
-    });
+  $("#buy-copper").click(function() {
+    game.player1.buyCopper(allCards);
+    $("#count-copper").text(countCopper);
+    $("#money-counter").text(game.player1.moneyInHand);
+    $("#buy-counter").text(game.player1.buyCounter);
+  });
 
-    $("#buy-silver").click(function() {
-      game.player1.buySilver(allCards);
-      $("#count-silver").text(countSilver);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCounter);
-    });
+  $("#buy-silver").click(function() {
+    game.player1.buySilver(allCards);
+    $("#count-silver").text(countSilver);
+    $("#money-counter").text(game.player1.moneyInHand);
+    $("#buy-counter").text(game.player1.buyCounter);
+  });
 
-    $("#buy-gold").click(function() {
-      game.player1.buyGold(allCards);
-      $("#count-gold").text(countGold);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCounter);
-    });
+  $("#buy-gold").click(function() {
+    game.player1.buyGold(allCards);
+    $("#count-gold").text(countGold);
+    $("#money-counter").text(game.player1.moneyInHand);
+    $("#buy-counter").text(game.player1.buyCounter);
+  });
 
-    $("#buy-estate").click(function() {
-      game.player1.buyEstate(allCards);
-      $("#count-estate").text(countEstate);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCounter);
-    });
+  $("#buy-estate").click(function() {
+    game.player1.buyEstate(allCards);
+    $("#count-estate").text(countEstate);
+    $("#money-counter").text(game.player1.moneyInHand);
+    $("#buy-counter").text(game.player1.buyCounter);
+  });
 
-    $("#buy-duchey").click(function() {
-      game.player1.buyDuchey(allCards);
-      $("#count-duchey").text(countDuchey);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCounter);
-    });
+  $("#buy-duchey").click(function() {
+    game.player1.buyDuchey(allCards);
+    $("#count-duchey").text(countDuchey);
+    $("#money-counter").text(game.player1.moneyInHand);
+    $("#buy-counter").text(game.player1.buyCounter);
+  });
 
-    $("#buy-province").click(function() {
-      game.player1.buyProvince(allCards);
-      $("#count-province").text(countProvince);
-      $("#money-counter").text(game.player1.moneyInHand);
-      $("#buy-counter").text(game.player1.buyCounter);
-    });
+  $("#buy-province").click(function() {
+    game.player1.buyProvince(allCards);
+    $("#count-province").text(countProvince);
+    $("#money-counter").text(game.player1.moneyInHand);
+    $("#buy-counter").text(game.player1.buyCounter);
+  });
 
-    $("#buy-cellar").click(function() {
-      var buysLeft= buyCellar(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 2;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
+  $("#buy-cellar").click(function() {
+    var buysLeft= buyCellar(moneyInHand,allCards,player1Discard,buyCount);
+    if(buysLeft < buyCount){
+    moneyInHand -= 2;
+    buyCount -= 1;
+    $("#money-counter").text(moneyInHand);
+    $("#buy-counter").text(buyCount);}
+  });
 
-    $("#buy-moat").click(function() {
-      var buysLeft= buyMoat(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 2;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
+  $("#buy-moat").click(function() {
+    var buysLeft= buyMoat(moneyInHand,allCards,player1Discard,buyCount);
+    if(buysLeft < buyCount){
+    moneyInHand -= 2;
+    buyCount -= 1;
+    $("#money-counter").text(moneyInHand);
+    $("#buy-counter").text(buyCount);}
+  });
 
-    $("#buy-village").click(function() {
-      var buysLeft= buyVillage(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 3;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
+  $("#buy-village").click(function() {
+    var buysLeft= buyVillage(moneyInHand,allCards,player1Discard,buyCount);
+    if(buysLeft < buyCount){
+    moneyInHand -= 3;
+    buyCount -= 1;
+    $("#money-counter").text(moneyInHand);
+    $("#buy-counter").text(buyCount);}
+  });
 
-    $("#buy-woodcutter").unbind('click').click(function() {
-      debugger;
-      postBuyParameters = buyWoodcutter(moneyInHand,allCards,player1Discard,buyCount);
-      player1Discard = postBuyParameters[2];
-      $("#money-counter").text(postBuyParameters[0]);
-      $("#buy-counter").text(postBuyParameters[1]);
-    });
+  $("#buy-woodcutter").unbind('click').click(function() {
+    debugger;
+    postBuyParameters = buyWoodcutter(moneyInHand,allCards,player1Discard,buyCount);
+    player1Discard = postBuyParameters[2];
+    $("#money-counter").text(postBuyParameters[0]);
+    $("#buy-counter").text(postBuyParameters[1]);
+  });
 
-    $("#buy-workshop").unbind('click').click(function() {
-      debugger;
-      postBuyParameters = buyWorkshop(moneyInHand,allCards,player1Discard,buyCount);
-      player1Discard = postBuyParameters[2];
-      $("#money-counter").text(postBuyParameters[0]);
-      $("#buy-counter").text(postBuyParameters[1]);
-    });
+  $("#buy-workshop").unbind('click').click(function() {
+    debugger;
+    postBuyParameters = buyWorkshop(moneyInHand,allCards,player1Discard,buyCount);
+    player1Discard = postBuyParameters[2];
+    $("#money-counter").text(postBuyParameters[0]);
+    $("#buy-counter").text(postBuyParameters[1]);
+  });
 
-    $("#buy-militia").click(function() {
-      var buysLeft= buyMilitia(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 4;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
+  $("#buy-militia").click(function() {
+    var buysLeft= buyMilitia(moneyInHand,allCards,player1Discard,buyCount);
+    if(buysLeft < buyCount){
+    moneyInHand -= 4;
+    buyCount -= 1;
+    $("#money-counter").text(moneyInHand);
+    $("#buy-counter").text(buyCount);}
+  });
 
-    $("#buy-remodel").click(function() {
-      var buysLeft= buyRemodel(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 4;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
+  $("#buy-remodel").click(function() {
+    var buysLeft= buyRemodel(moneyInHand,allCards,player1Discard,buyCount);
+    if(buysLeft < buyCount){
+    moneyInHand -= 4;
+    buyCount -= 1;
+    $("#money-counter").text(moneyInHand);
+    $("#buy-counter").text(buyCount);}
+  });
 
-    $("#buy-smithy").click(function() {
-      var buysLeft= buySmithy(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 4;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
+  $("#buy-smithy").click(function() {
+    var buysLeft= buySmithy(moneyInHand,allCards,player1Discard,buyCount);
+    if(buysLeft < buyCount){
+    moneyInHand -= 4;
+    buyCount -= 1;
+    $("#money-counter").text(moneyInHand);
+    $("#buy-counter").text(buyCount);}
+  });
 
-    $("#buy-market").click(function() {
-      var buysLeft= buyMarket(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 5;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
+  $("#buy-market").click(function() {
+    var buysLeft= buyMarket(moneyInHand,allCards,player1Discard,buyCount);
+    if(buysLeft < buyCount){
+    moneyInHand -= 5;
+    buyCount -= 1;
+    $("#money-counter").text(moneyInHand);
+    $("#buy-counter").text(buyCount);}
+  });
 
-    $("#buy-mine").click(function() {
-      var buysLeft= buyMine(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 5;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
-    });
+  $("#buy-mine").click(function() {
+    var buysLeft= buyMine(moneyInHand,allCards,player1Discard,buyCount);
+    if(buysLeft < buyCount){
+    moneyInHand -= 5;
+    buyCount -= 1;
+    $("#money-counter").text(moneyInHand);
+    $("#buy-counter").text(buyCount);}
   });
 
 
