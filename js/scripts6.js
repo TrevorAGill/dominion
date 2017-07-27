@@ -1,25 +1,17 @@
 //Frontend
 $(document).ready(function() {
-
+  var allCards = createCards();
+  var game = new Game(allCards);
+  game.player1.shuffler();
+  game.player2.shuffler();
 
   $("#name-submit").click(function(event) {
-    var allCards = createCards();
-    var game = new Game(allCards);
-    game.player1.shuffler();
-    game.player2.shuffler();
     game.player1.playerName = $("#PlayerOneName").val();
     game.player2.playerName = $("#PlayerTwoName").val();
     $("#playerOneNameDisplay").append(game.player1.playerName);
     $("#playerTwoNameDisplay").append(game.player2.playerName);
     $("#screen2").show();
     $("#screen1").addClass("hide");
-
-
-    // $(".namewell").slideUp("slow");
-    // $(".gameBoard").show();
-    // $(".gameBoard").fadeIn("slow");
-    // // $(".gameBoard").slideDown("slow");
-    // $(".cube").show();
   });
 
   $("#draw-hand1").on('click', function(event) {
@@ -44,16 +36,35 @@ $(document).ready(function() {
     $(".hand").html("");
   });
 
+  $("#draw-hand2").on('click', function(event) {
+    event.preventDefault();
+    debugger;
+    game.player2.draw();
+    game.player2.revealCards();
+    game.player2.calculateResources();
+    debugger;
+    $("#resources-remaining").show();
+    $("#money-counter").text(game.player2.moneyInHand);
+    $("#action-counter").text(game.player2.actionCount);
+    $("#buy-counter").text(game.player2.buyCount);
+    $("#deck-counter").text(game.player2.deck.length);
+    $("#discard-counter").text(game.player2.shufflePile.length);
+  });
+
+  $("#end-turn2").click(function() {
+    debugger;
+    game.player2.discard();
+    $(".buy-zone").hide();
+    $(".hand").html("");
+    game.turn = 1;
+  });
+
   $(document).on('click','#play-market',function() {
     game.player1.playMarket();
     document.getElementById("play-market").disabled = true;
     $("#money-counter").text(game.player1.moneyInHand);
     $("#action-counter").text(game.player1.actionCount);
     $("#buy-counter").text(game.player1.buyCount);
-  });
-
-  $("#play-woodcutter").click(function() {
-    buyCount = actionWoodcutter(buyCount,moneyInHand);
   });
 
   $("#buy-phase1").click(function() {
@@ -86,46 +97,118 @@ $(document).ready(function() {
     $("#count-mine").text(countMine);
   });
 
-  $("#buy-copper").click(function() {
-    game.player1.buyCopper(allCards);
+  $("#buy-phase2").click(function() {
+    $(".buy-zone").show();
+    document.getElementById("play-cellar").disabled = true;
+    document.getElementById("play-moat").disabled = true;
+    document.getElementById("play-village").disabled = true;
+    document.getElementById("play-workshop").disabled = true;
+    document.getElementById("play-woodcutter").disabled = true;
+    document.getElementById("play-smithy").disabled = true;
+    document.getElementById("play-remodel").disabled = true;
+    document.getElementById("play-militia").disabled = true;
+    document.getElementById("play-market").disabled = true;
+    document.getElementById("play-mine").disabled = true;
     $("#count-copper").text(countCopper);
-    $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCount);
+    $("#count-silver").text(countSilver);
+    $("#count-gold").text(countGold);
+    $("#count-estate").text(countEstate);
+    $("#count-duchey").text(countDuchey);
+    $("#count-province").text(countProvince);
+    $("#count-cellar").text(countCellar);
+    $("#count-moat").text(countMoat);
+    $("#count-village").text(countVillage);
+    $("#count-workshop").text(countWorkshop);
+    $("#count-woodcutter").text(countWoodcutter);
+    $("#count-smithy").text(countSmithy);
+    $("#count-remodel").text(countRemodel);
+    $("#count-militia").text(countMilitia);
+    $("#count-market").text(countMarket);
+    $("#count-mine").text(countMine);
+  });
+
+  $("#buy-copper").click(function() {
+    if(game.player1.turn === 1) {
+      game.player1.buyCopper(allCards);
+      $("#count-copper").text(countCopper);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCount);
+    } else if (game.player2.turn === 1) {
+      game.player2.buyCopper(allCards);
+      $("#count-copper").text(countCopper);
+      $("#money-counter").text(game.player2.moneyInHand);
+      $("#buy-counter").text(game.player2.buyCount);
+    }
   });
 
   $("#buy-silver").click(function() {
-    game.player1.buySilver(allCards);
-    $("#count-silver").text(countSilver);
-    $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCount);
+    if(game.player1.turn === 1) {
+      game.player1.buySilver(allCards);
+      $("#count-silver").text(countSilver);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCount);
+    } else if (game.player2.turn === 1) {
+      game.player2.buySilver(allCards);
+      $("#count-silver").text(countSilver);
+      $("#money-counter").text(game.player2.moneyInHand);
+      $("#buy-counter").text(game.player2.buyCount);
+    }
   });
 
   $("#buy-gold").click(function() {
-    game.player1.buyGold(allCards);
-    $("#count-gold").text(countGold);
-    $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCount);
+    if(game.player1.turn === 1) {
+      game.player1.buyGold(allCards);
+      $("#count-gold").text(countGold);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCount);
+    } else if (game.player2.turn === 1) {
+      game.player2.buyGold(allCards);
+      $("#count-gold").text(countGold);
+      $("#money-counter").text(game.player2.moneyInHand);
+      $("#buy-counter").text(game.player2.buyCount);
+    }
   });
 
   $("#buy-estate").click(function() {
-    game.player1.buyEstate(allCards);
-    $("#count-estate").text(countEstate);
-    $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCount);
+    if(game.player1.turn === 1) {
+      game.player1.buyEstate(allCards);
+      $("#count-estate").text(countEstate);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCount);
+    } else if (game.player2.turn === 1) {
+      game.player2.buyEstate(allCards);
+      $("#count-estate").text(countEstate);
+      $("#money-counter").text(game.player2.moneyInHand);
+      $("#buy-counter").text(game.player2.buyCount);
+    }
   });
 
   $("#buy-duchey").click(function() {
-    game.player1.buyDuchey(allCards);
-    $("#count-duchey").text(countDuchey);
-    $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCount);
+    if(game.player1.turn === 1) {
+      game.player1.buyDuchey(allCards);
+      $("#count-duchey").text(countDuchey);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCount);
+    } else if (game.player2.turn === 1) {
+      game.player2.buyDuchey(allCards);
+      $("#count-duchey").text(countDuchey);
+      $("#money-counter").text(game.player2.moneyInHand);
+      $("#buy-counter").text(game.player2.buyCount);
+    }
   });
 
   $("#buy-province").click(function() {
-    game.player1.buyProvince(allCards);
-    $("#count-province").text(countProvince);
-    $("#money-counter").text(game.player1.moneyInHand);
-    $("#buy-counter").text(game.player1.buyCount);
+    if(game.player1.turn === 1) {
+      game.player1.buyProvince(allCards);
+      $("#count-province").text(countProvince);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCount);
+    } else if (game.player2.turn === 1) {
+      game.player2.buyProvince(allCards);
+      $("#count-province").text(countProvince);
+      $("#money-counter").text(game.player2.moneyInHand);
+      $("#buy-counter").text(game.player2.buyCount);
+    }
   });
 
   $("#buy-cellar").click(function() {
@@ -308,7 +391,7 @@ var j, x, i;
 }
 
 Player.prototype.draw = function() {
-  debugger;
+  this.turn = 1;
   var cardsInDeck = this.deck.length;
   if(this.deck.length >= 5) {
     debugger;
@@ -329,7 +412,7 @@ Player.prototype.discard = function() {
   this.buyCount = 0;
   this.actionCount = 0;
   this.moneyInHand = 0;
-
+  this.turn = 0;
 }
 
 Player.prototype.revealCards = function() {
@@ -715,7 +798,7 @@ function Pile (name) {
   this.name = name;
 }
 
-function Player (playerName, deck, hand, shufflePile, vpTotal, turn, actionCount, buyCount, moneyInHand) {
+function Player (playerName, deck, hand, shufflePile, vpTotal, turn, actionCount, buyCount, moneyInHand, turn) {
   this.playerName = playerName;
   this.deck = deck;
   this.hand = hand;
@@ -733,7 +816,6 @@ function Deck (cards) {
 
 function Game (allCards) {
   this.players = 2;
-  this.turn = 1
   this.player1 = new Player("King Arthur",[],[],allCards[3].splice(0,3).concat(allCards[0].splice(0,7)),0,1,0,0,0);
   this.player2 = new Player("Richard the Lionheart",[],[],allCards[3].splice(0,3).concat(allCards[0].splice(0,7)),0,0,0,0,0);
 }

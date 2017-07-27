@@ -21,6 +21,12 @@ h3 {
   margin-top: 0px;
 }
 
+body {
+  background-image: url("../img/knight.jpg");
+  background-size: cover;
+  margin: auto;
+}
+
 ul {
   list-style: none;
 }
@@ -34,7 +40,10 @@ ul {
 }
 
 .screen1 {
-  margin-top: 20px;
+  margin-top: 360px;
+  border-style: solid;
+  border-width: thick;
+  border-color: #721414;
 }
 
 #goal {
