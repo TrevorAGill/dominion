@@ -6,7 +6,6 @@ $(document).ready(function() {
   game.player1.Shuffler();
   game.player2.Shuffler();
 
-
   $("#draw-hand1").click(function(event) {
     game.player1.Draw();
     document.getElementById("draw-hand1").disabled = true;
@@ -42,8 +41,6 @@ $(document).ready(function() {
 
   $("#buy-phase1").click(function() {
     $(".buy-zone").show();
-    // buyCount = 1;
-    // moneyInHand = countHandMoney(player1Hand);
     $("#count-copper").text(countCopper);
     $("#count-silver").text(countSilver);
     $("#count-gold").text(countGold);
@@ -62,16 +59,13 @@ $(document).ready(function() {
     $("#count-mine").text(countMine);
 
     $("#buy-copper").click(function() {
-      var buysLeft= buyCopper(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 0;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
+      game.player1.buyCopper(allCards);
+      $("#count-copper").text(countCopper);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCounter);
     });
 
     $("#buy-silver").click(function() {
-      debugger;
       game.player1.buySilver(allCards);
       $("#count-silver").text(countSilver);
       $("#money-counter").text(game.player1.moneyInHand);
@@ -79,39 +73,31 @@ $(document).ready(function() {
     });
 
     $("#buy-gold").click(function() {
-      var buysLeft= buyGold(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 6;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
+      game.player1.buyGold(allCards);
+      $("#count-gold").text(countGold);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCounter);
     });
 
     $("#buy-estate").click(function() {
-      var buysLeft= buyEstate(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 2;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
+      game.player1.buyEstate(allCards);
+      $("#count-estate").text(countEstate);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCounter);
     });
 
     $("#buy-duchey").click(function() {
-      var buysLeft= buyDuchey(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 5;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
+      game.player1.buyDuchey(allCards);
+      $("#count-duchey").text(countDuchey);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCounter);
     });
 
     $("#buy-province").click(function() {
-      var buysLeft= buyProvince(moneyInHand,allCards,player1Discard,buyCount);
-      if(buysLeft < buyCount){
-      moneyInHand -= 8;
-      buyCount -= 1;
-      $("#money-counter").text(moneyInHand);
-      $("#buy-counter").text(buyCount);}
+      game.player1.buyProvince(allCards);
+      $("#count-province").text(countProvince);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCounter);
     });
 
     $("#buy-cellar").click(function() {
@@ -261,7 +247,22 @@ $(document).ready(function() {
 // Game.prototype.deckToggle = function(player) {
 //   alert(player);
 // }
-
+var countCopper = 60
+var countSilver = 40;
+var countGold = 30;
+var countEstate = 24;
+var countDuchey = 12;
+var countProvince = 12;
+var countCellar = 10;
+var countMoat = 10;
+var countVillage = 10;
+var countWoodcutter = 10;
+var countWorkshop = 10;
+var countMilitia = 10;
+var countRemodel = 10;
+var countSmithy = 10;
+var countMarket = 10;
+var countMine = 10;
 
 Player.prototype.Shuffler = function() {
 debugger;
@@ -315,38 +316,18 @@ Player.prototype.calculateResources = function() {
   }
 }
 
-debugger;
-var countCopper = 60
-var countSilver = 40;
-var countGold = 30;
-var countEstate = 24;
-var countDuchey = 12;
-var countProvince = 12;
-
-var countCellar = 10;
-var countMoat = 10;
-var countVillage = 10;
-var countWoodcutter = 10;
-var countWorkshop = 10;
-var countMilitia = 10;
-var countRemodel = 10;
-var countSmithy = 10;
-var countMarket = 10;
-var countMine = 10;
-
-function buyCopper(moneyInHand,allCards,player1Discard,buyCount) {
-  if(countCopper > 0 && moneyInHand >= 0 && buyCount > 0) {
+Player.prototype.buyCopper = function(allCards) {
+  if(countCopper > 0 && this.moneyInHand >= 3 && this.buyCount > 0) {
     countCopper -= 1;
-    buyCount -= 1;
-    player1Discard = player1Discard.concat(allCards[0].splice(0, 1));
-    moneyInHand -= 0;
+    this.buyCount -= 1;
+    this.moneyInHand = this.moneyInHand;
+    this.shufflePile = this.shufflePile.concat(allCards[0].splice(0, 1));
+    debugger;
   } else if (countCopper === 0) {
     alert("This card has been bought out.");
-  } else if (buyCount === 0) {
+  } else if (this.buyCount === 0) {
     alert("You don't have any buys remaining this turn");
   }
-  $("#count-copper").text(countCopper);
-  return buyCount;
 }
 
 Player.prototype.buySilver = function(allCards) {
@@ -365,81 +346,68 @@ Player.prototype.buySilver = function(allCards) {
   }
 }
 
-function buyWoodcutter(moneyInHand,allCards,player1Discard,buyCount) {
-  debugger;
-  if(countWoodcutter > 0 && moneyInHand >= 3 && buyCount > 0) {
-    countWoodcutter -= 1;
-    buyCount -= 1;
-    moneyInHand -= 3;
-    player1Discard = player1Discard.concat(allCards[10].splice(0, 1));
-    debugger;
-  } else if (countWoodcutter === 0) {
-    alert("This card has been bought out.");
-  } else if (moneyInHand < 3) {
-    alert("You don't have enough money in your hand to buy this card.");
-  } else if (buyCount === 0) {
-    alert("You don't have any buys remaining this turn");
-  }
-  $("#count-woodcutter").text(countWoodcutter);
-  postBuyParameters = []
-  postBuyParameters[0] = moneyInHand;
-  postBuyParameters[1] = buyCount;
-  postBuyParameters[2] = player1Discard;
-  return postBuyParameters;
-}
-function buyWorkshop(moneyInHand,allCards,player1Discard,buyCount) {
-  debugger;
-  if(countWorkshop > 0 && moneyInHand >= 3 && buyCount > 0) {
-    countWorkshop -= 1;
-    buyCount -= 1;
-    moneyInHand -= 3;
-    player1Discard = player1Discard.concat(allCards[9].splice(0, 1));
-    debugger;
-  } else if (countWorkshop === 0) {
-    alert("This card has been bought out.");
-  } else if (moneyInHand < 3) {
-    alert("You don't have enough money in your hand to buy this card.");
-  } else if (buyCount === 0) {
-    alert("You don't have any buys remaining this turn");
-  }
-  $("#count-workshop").text(countWorkshop);
-  postBuyParameters = []
-  postBuyParameters[0] = moneyInHand;
-  postBuyParameters[1] = buyCount;
-  postBuyParameters[2] = player1Discard;
-  return postBuyParameters;
-}
-function buyGold(moneyInHand,allCards,shufflePile,buyCount) {
-  if(countGold > 0 && moneyInHand >= 6 && buyCount > 0) {
+Player.prototype.buyGold = function(allCards) {
+  if(countGold > 0 && this.moneyInHand >= 6 && this.buyCount > 0) {
     countGold -= 1;
-    buyCount -= 1;
-    shufflePile = shufflePile.concat(allCards[2].splice(0, 1));
-    moneyInHand -= 6;
+    this.buyCount -= 1;
+    this.moneyInHand -= 6;
+    this.shufflePile = this.shufflePile.concat(allCards[2].splice(0, 1));
+    debugger;
   } else if (countGold === 0) {
     alert("This card has been bought out.");
-  } else if (moneyInHand < 5) {
+  } else if (this.moneyInHand < 6) {
     alert("You don't have enough money in your hand to buy this card.");
-  } else if (buyCount === 0) {
+  } else if (this.buyCount === 0) {
     alert("You don't have any buys remaining this turn");
   }
-  $("#count-Gold").text(countGold);
-  return buyCount;
 }
-function buyMarket(moneyInHand,allCards,shufflePile,buyCount) {
-  if(countMarket > 0 && moneyInHand >= 5 && buyCount > 0) {
-    countMarket -= 1;
-    buyCount -= 1;
-    shufflePile = shufflePile.concat(allCards[14].splice(0, 1));
-    moneyInHand -= 5;
-  } else if (countMarket === 0) {
+
+Player.prototype.buyEstate = function(allCards) {
+  if(countEstate > 0 && this.moneyInHand >= 2 && this.buyCount > 0) {
+    countEstate -= 1;
+    this.buyCount -= 1;
+    this.moneyInHand -= 2;
+    this.shufflePile = this.shufflePile.concat(allCards[3].splice(0, 1));
+    debugger;
+  } else if (countEstate === 0) {
     alert("This card has been bought out.");
-  } else if (moneyInHand < 5) {
+  } else if (this.moneyInHand < 2) {
     alert("You don't have enough money in your hand to buy this card.");
-  } else if (buyCount === 0) {
+  } else if (this.buyCount === 0) {
     alert("You don't have any buys remaining this turn");
   }
-  $("#count-market").text(countMarket);
-  return buyCount;
+}
+
+Player.prototype.buyDuchey = function(allCards) {
+  if(countDuchey > 0 && this.moneyInHand >= 5 && this.buyCount > 0) {
+    countDuchey -= 1;
+    this.buyCount -= 1;
+    this.moneyInHand -= 5;
+    this.shufflePile = this.shufflePile.concat(allCards[4].splice(0, 1));
+    debugger;
+  } else if (countDuchey === 0) {
+    alert("This card has been bought out.");
+  } else if (this.moneyInHand < 5) {
+    alert("You don't have enough money in your hand to buy this card.");
+  } else if (this.buyCount === 0) {
+    alert("You don't have any buys remaining this turn");
+  }
+}
+
+Player.prototype.buyProvince = function(allCards) {
+  if(countProvince > 0 && this.moneyInHand >= 8 && this.buyCount > 0) {
+    countProvince -= 1;
+    this.buyCount -= 1;
+    this.moneyInHand -= 8;
+    this.shufflePile = this.shufflePile.concat(allCards[5].splice(0, 1));
+    debugger;
+  } else if (countProvince === 0) {
+    alert("This card has been bought out.");
+  } else if (this.moneyInHand < 8) {
+    alert("You don't have enough money in your hand to buy this card.");
+  } else if (this.buyCount === 0) {
+    alert("You don't have any buys remaining this turn");
+  }
 }
 
 function createCards() {
