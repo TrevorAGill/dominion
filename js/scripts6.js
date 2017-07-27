@@ -30,9 +30,10 @@ $(document).ready(function() {
 
   $(document).on('click','#play-market',function() {
     game.player1.playMarket();
+    document.getElementById("play-market").disabled = true;
     $("#money-counter").text(game.player1.moneyInHand);
     $("#action-counter").text(game.player1.actionCount);
-    $("#action-counter").text(game.player1.actionCount);
+    $("#buy-counter").text(game.player1.buyCount);
   });
 
   $("#play-woodcutter").click(function() {
@@ -41,6 +42,16 @@ $(document).ready(function() {
 
   $("#buy-phase1").click(function() {
     $(".buy-zone").show();
+    document.getElementById("play-cellar").disabled = true;
+    document.getElementById("play-moat").disabled = true;
+    document.getElementById("play-village").disabled = true;
+    document.getElementById("play-workshop").disabled = true;
+    document.getElementById("play-woodcutter").disabled = true;
+    document.getElementById("play-smithy").disabled = true;
+    document.getElementById("play-remodel").disabled = true;
+    document.getElementById("play-militia").disabled = true;
+    document.getElementById("play-market").disabled = true;
+    document.getElementById("play-mine").disabled = true;
     $("#count-copper").text(countCopper);
     $("#count-silver").text(countSilver);
     $("#count-gold").text(countGold);
@@ -309,6 +320,31 @@ Player.prototype.revealCards = function() {
   debugger;
   for (i=0 ; i<this.hand.length ; i++) {
     if(this.hand[i].name === "Copper") {
+      $(".hand").append("<input type='image' src='img/copper.jpg' name='play-copper' id='play-copper'>")
+    } else if(this.hand[i].name === "Silver") {
+      $(".hand").append("<input type='image' src='img/silver.jpg' name='play-silver' id='play-silver'>")
+    } else if(this.hand[i].name === "Gold") {
+      $(".hand").append("<input type='image' src='img/gold.jpg' name='play-gold' id='play-gold'>")
+    } else if(this.hand[i].name === "Estate") {
+      $(".hand").append("<input type='image' src='img/estate.jpg' name='play-estate' id='play-estate'>")
+    } else if(this.hand[i].name === "Duchey") {
+      $(".hand").append("<input type='image' src='img/duchey.jpg' name='play-duchey' id='play-duchey'>")
+    } else if(this.hand[i].name === "Province") {
+      $(".hand").append("<input type='image' src='img/province.jpg' name='play-province' id='play-province'>")
+    } else if(this.hand[i].name === "Workshop") {
+      $(".hand").append("<input type='image' src='img/workshop.jpg' name='play-workshop' id='play-workshop'>")
+    } else if(this.hand[i].name === "Woodcutter") {
+      $(".hand").append("<input type='image' src='img/woodcutter.jpg' name='play-woodcutter' id='play-woodcutter'>")
+    } else if(this.hand[i].name === "Market") {
+      $(".hand").append("<input type='image' src='img/market.jpg' name='play-market' id='play-market'>")
+    }
+  }
+}
+
+Player.prototype.revealCardsFromAction = function(startingIndex) {
+  debugger;
+  for (i=startingIndex ; i<this.hand.length ; i++) {
+    if(this.hand[i].name === "Copper") {
       $(".hand").append("<img src='img/copper.jpg'>")
     } else if(this.hand[i].name === "Silver") {
       $(".hand").append("<img src='img/silver.jpg'>")
@@ -442,7 +478,6 @@ Player.prototype.buyMarket = function(allCards) {
     this.buyCount -= 1;
     this.moneyInHand -= 5;
     this.shufflePile = this.shufflePile.concat(allCards[14].splice(0, 1));
-    debugger;
   } else if (countMarket === 0) {
     alert("This card has been bought out.");
   } else if (this.moneyInHand < 5) {
@@ -453,14 +488,17 @@ Player.prototype.buyMarket = function(allCards) {
 }
 
 Player.prototype.playMarket = function() {
-  debugger;
+  var startingIndex = this.hand.length
   this.hand = this.hand.concat(this.deck.splice(0,1));
   this.buyCount += 1;
   this.actionAcount += 1;
   this.moneyInHand += 1;
-  debugger;
-  this.revealCards();
-  debugger;
+  if(this.hand[(this.hand.length - 1)].type="money") {
+    debugger;
+    this.moneyInHand += this.hand[(this.hand.length - 1)].value;
+    debugger;
+  }
+  this.revealCardsFromAction(startingIndex);
 }
 
 function createCards() {
