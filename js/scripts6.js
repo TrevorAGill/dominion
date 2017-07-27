@@ -9,18 +9,15 @@ $(document).ready(function() {
 
   $("#draw-hand1").click(function(event) {
     game.player1.Draw();
-    // document.getElementById("draw-hand1").disabled = true;
+    document.getElementById("draw-hand1").disabled = true;
     game.player1.revealCards();
-    debugger;
-    // $("#resources-remaining").show();
-    // var actionCount = 1;
-    // var buyCount = 1;
-    // var moneyInHand = game.player1.countHandMoney(player.hand);
-    // $("#money-counter").text(moneyInHand);
-    // $("#action-counter").text(actionCount);
-    // $("#buy-counter").text(buyCount);
-    // $("#deck-counter").text(player1Deck.length);
-    // $("#discard-counter").text(player1Discard.length);
+    game.player1.calculateResources();
+    $("#resources-remaining").show();
+    $("#money-counter").text(game.player1.moneyInHand);
+    $("#action-counter").text(game.player1.actionCount);
+    $("#buy-counter").text(game.player1.buyCount);
+    $("#deck-counter").text(game.player1.deck.length);
+    $("#discard-counter").text(game.player1.shufflePile.length);
   });
 
   $("#end-turn1").click(function() {
@@ -213,27 +210,7 @@ $(document).ready(function() {
     //   revealCardsInHand(player2Hand);
     // });
 
-    Player.prototype.revealCards = function () {
-      for (i=0 ; i<this.hand.length ; i++) {
-        if(this.hand[i].name === "Copper") {
-          $(".hand").append("<img src='img/copper.jpg'>")
-        } else if(this.hand[i].name === "Silver") {
-          $(".hand").append("<img src='img/silver.jpg'>")
-        } else if(this.hand[i].name === "Gold") {
-          $(".hand").append("<img src='img/gold.jpg'>")
-        } else if(this.hand[i].name === "Estate") {
-          $(".hand").append("<img src='img/estate.jpg'>")
-        } else if(this.hand[i].name === "Duchey") {
-          $(".hand").append("<img src='img/duchey.jpg'>")
-        } else if(this.hand[i].name === "Province") {
-          $(".hand").append("<img src='img/province.jpg'>")
-        } else if(this.hand[i].name === "Workshop") {
-          $(".hand").append("<input type='image' src='img/workshop.jpg' name='play-workshop' id='play-workshop'>")
-        } else if(this.hand[i].name === "Woodcutter") {
-          $(".hand").append("<input type='image' src='img/woodcutter.jpg' name='play-woodcutter' id='play-woodcutter'>")
-        }
-      }
-    }
+
     // function revealCardsInHand(player2Hand) {
     //   for (i=0 ; i<player2Hand.length ; i++) {
     //     if(player2Hand[i].name === "Copper") {
@@ -272,18 +249,18 @@ $(document).ready(function() {
 
 //Backend
 
-function asd(game){
-  if(game.turn = 1){
-    currentPlayer = game.player1;
-  } else if(game.turn = 2){
-    currentPlayer = game.player2;
-  }
-  return currentPlayer;
-}
+// function asd(game){
+//   if(game.turn = 1){
+//     currentPlayer = game.player1;
+//   } else if(game.turn = 2){
+//     currentPlayer = game.player2;
+//   }
+//   return currentPlayer;
+// }
 
-Game.prototype.deckToggle = function(player) {
-  alert(player);
-}
+// Game.prototype.deckToggle = function(player) {
+//   alert(player);
+// }
 
 Player.prototype.countHandMoney = function(hand) {
   var moneyInHand = 0;
@@ -317,27 +294,37 @@ Player.prototype.Draw = function() {
   debugger;
 }
 
-Player.prototype.createDeck = function(allCards) {
-  debugger;
-  // var playerCards = [];
-  var playerOneMoney = allCards[0].splice(0, 7);
-  var shufflePile = playerOneMoney.concat(allCards[3].splice(0, 3));
-  var j, x, i;
-    for (i = shufflePile.length; i; i--) {
-       j = Math.floor(Math.random() * i);
-       x = shufflePile[i - 1];
-       shufflePile[i - 1] = shufflePile[j];
-       shufflePile[j] = x;
+Player.prototype.revealCards = function() {
+  for (i=0 ; i<this.hand.length ; i++) {
+    if(this.hand[i].name === "Copper") {
+      $(".hand").append("<img src='img/copper.jpg'>")
+    } else if(this.hand[i].name === "Silver") {
+      $(".hand").append("<img src='img/silver.jpg'>")
+    } else if(this.hand[i].name === "Gold") {
+      $(".hand").append("<img src='img/gold.jpg'>")
+    } else if(this.hand[i].name === "Estate") {
+      $(".hand").append("<img src='img/estate.jpg'>")
+    } else if(this.hand[i].name === "Duchey") {
+      $(".hand").append("<img src='img/duchey.jpg'>")
+    } else if(this.hand[i].name === "Province") {
+      $(".hand").append("<img src='img/province.jpg'>")
+    } else if(this.hand[i].name === "Workshop") {
+      $(".hand").append("<input type='image' src='img/workshop.jpg' name='play-workshop' id='play-workshop'>")
+    } else if(this.hand[i].name === "Woodcutter") {
+      $(".hand").append("<input type='image' src='img/woodcutter.jpg' name='play-woodcutter' id='play-woodcutter'>")
     }
-    this.deck = shufflePile;
-    this.shufflePile = [];
-    this.hand = this.deck.splice(0,5);
-    debugger;
-    // playerCards[0] = this.deck;
-    // playerCards[1] = this.hand;
-    // playerCards[2] = this.shufflePile;
-    // debugger;
-    // return playerCards;
+  }
+}
+
+Player.prototype.calculateResources = function() {
+  this.buyCount = 1;
+  this.actionCount = 1;
+  for(i=0 ; i<this.hand.length ; i++) {
+    if(this.hand[i].type === "money") {
+    this.moneyInHand += this.hand[i].value;
+    }
+  }
+  alert(this.moneyInHand);
 }
 
 debugger;
@@ -670,13 +657,16 @@ function Pile (name) {
   this.name = name;
 }
 
-function Player (name, deck, hand, shufflePile, vpTotal, turn) {
+function Player (name, deck, hand, shufflePile, vpTotal, turn, actionCount, buyCount, moneyInHand) {
   this.name = name;
   this.deck = deck;
   this.hand = hand;
   this.shufflePile = shufflePile;
   this.vpTotal = vpTotal;
   this.turn = turn;
+  this.actionCount = actionCount;
+  this.buyCount = buyCount;
+  this.moneyInHand = moneyInHand
 }
 
 function Deck (cards) {
@@ -686,6 +676,6 @@ function Deck (cards) {
 function Game (allCards) {
   this.players = 2;
   this.turn = 1
-  this.player1 = new Player("King Arthur",[],[],allCards[3].splice(0,3).concat(allCards[0].splice(0,7)),0,1);
-  this.player2 = new Player("Richard the Lionheart",[],[],allCards[3].splice(0,3).concat(allCards[0].splice(0,7)),0,0);
+  this.player1 = new Player("King Arthur",[],[],allCards[3].splice(0,3).concat(allCards[0].splice(0,7)),0,1,0,0,0);
+  this.player2 = new Player("Richard the Lionheart",[],[],allCards[3].splice(0,3).concat(allCards[0].splice(0,7)),0,0,0,0,0);
 }
