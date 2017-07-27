@@ -70,12 +70,12 @@ $(document).ready(function() {
       $("#buy-counter").text(buyCount);}
     });
 
-    $("#buy-silver").unbind('click').click(function() {
+    $("#buy-silver").click(function() {
       debugger;
-      postBuyParameters = buySilver(moneyInHand,allCards,player1Discard,buyCount);
-      player1Discard = postBuyParameters[2];
-      $("#money-counter").text(postBuyParameters[0]);
-      $("#buy-counter").text(postBuyParameters[1]);
+      game.player1.buySilver(allCards);
+      $("#count-silver").text(countSilver);
+      $("#money-counter").text(game.player1.moneyInHand);
+      $("#buy-counter").text(game.player1.buyCounter);
     });
 
     $("#buy-gold").click(function() {
@@ -262,17 +262,6 @@ $(document).ready(function() {
 //   alert(player);
 // }
 
-Player.prototype.countHandMoney = function(hand) {
-  var moneyInHand = 0;
-  debugger;
-  for(i=0 ; i<game.player1.hand.length ; i++) {
-    if(game.player1.hand[i].name === "Copper" || game.player1.hand[i].name === "Silver" || game.player1.hand[i].name === "Gold") {
-    moneyInHand += game.player1.hand[i].value;
-    }
-  }
-  debugger;
-  return moneyInHand;
-}
 
 Player.prototype.Shuffler = function() {
 debugger;
@@ -324,7 +313,6 @@ Player.prototype.calculateResources = function() {
     this.moneyInHand += this.hand[i].value;
     }
   }
-  alert(this.moneyInHand);
 }
 
 debugger;
@@ -360,28 +348,23 @@ function buyCopper(moneyInHand,allCards,player1Discard,buyCount) {
   $("#count-copper").text(countCopper);
   return buyCount;
 }
-function buySilver(moneyInHand,allCards,player1Discard,buyCount) {
-  debugger;
-  if(countSilver > 0 && moneyInHand >= 3 && buyCount > 0) {
+
+Player.prototype.buySilver = function(allCards) {
+  if(countSilver > 0 && this.moneyInHand >= 3 && this.buyCount > 0) {
     countSilver -= 1;
-    buyCount -= 1;
-    moneyInHand -= 3;
-    player1Discard = player1Discard.concat(allCards[1].splice(0, 1));
+    this.buyCount -= 1;
+    this.moneyInHand -= 3;
+    this.shufflePile = this.shufflePile.concat(allCards[1].splice(0, 1));
     debugger;
   } else if (countSilver === 0) {
     alert("This card has been bought out.");
-  } else if (moneyInHand < 3) {
+  } else if (this.moneyInHand < 3) {
     alert("You don't have enough money in your hand to buy this card.");
-  } else if (buyCount === 0) {
+  } else if (this.buyCount === 0) {
     alert("You don't have any buys remaining this turn");
   }
-  $("#count-silver").text(countSilver);
-  postBuyParameters = []
-  postBuyParameters[0] = moneyInHand;
-  postBuyParameters[1] = buyCount;
-  postBuyParameters[2] = player1Discard;
-  return postBuyParameters;
 }
+
 function buyWoodcutter(moneyInHand,allCards,player1Discard,buyCount) {
   debugger;
   if(countWoodcutter > 0 && moneyInHand >= 3 && buyCount > 0) {
