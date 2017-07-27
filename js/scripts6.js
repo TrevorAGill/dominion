@@ -220,11 +220,25 @@ $(document).ready(function() {
       $("#count-province").text(countProvince);
       $("#money-counter").text(game.player1.moneyInHand);
       $("#buy-counter").text(game.player1.buyCount);
+      if(countProvince === 9) {
+        var player1VPs = game.player1.vpTotal;
+        var player2VPs = game.player2.vpTotal;
+        var player1Name = game.player1.playerName;
+        var player2Name = game.player2.playerName;
+        findWinner(player1VPs,player2VPs,player1Name,player2Name);
+      }
     } else if (game.player2.turn === 1) {
       game.player2.buyProvince(allCards);
       $("#count-province").text(countProvince);
       $("#money-counter").text(game.player2.moneyInHand);
       $("#buy-counter").text(game.player2.buyCount);
+      if(countProvince === 9) {
+        var player1VPs = game.player1.vpTotal;
+        var player2VPs = game.player2.vpTotal;
+        var player1Name = game.player1.playerName;
+        var player2Name = game.player2.playerName;
+        findWinner(player1VPs,player2VPs,player1Name,player2Name);
+      }
     }
   });
 
@@ -575,16 +589,12 @@ Player.prototype.buyDuchey = function(allCards) {
 }
 
 Player.prototype.buyProvince = function(allCards) {
-  if(countProvince === 0 && this.moneyInHand >= 8 && this.buyCount > 0) {
+  if(countProvince > 0 && this.moneyInHand >= 1 && this.buyCount > 0) {
     countProvince -= 1;
     this.buyCount -= 1;
     this.moneyInHand -= 8;
     this.shufflePile = this.shufflePile.concat(allCards[5].splice(0, 1));
     this.vpTotal += 6
-    debugger;
-  } else if (countProvince === 10) {
-    var winner = findWinner();
-    alert("The winner is " + winner);
   } else if (this.moneyInHand < 8) {
     alert("You don't have enough money in your hand to buy this card.");
   } else if (this.buyCount === 0) {
@@ -592,27 +602,14 @@ Player.prototype.buyProvince = function(allCards) {
   }
 }
 
-// Player.prototype.buyProvince = function(allCards) {
-//   if(countProvince >= 2 && this.moneyInHand >= 8 && this.buyCount > 0) {
-//     countProvince -= 1;
-//     this.buyCount -= 1;
-//     this.moneyInHand -= 8;
-//     this.shufflePile = this.shufflePile.concat(allCards[5].splice(0, 1));
-//     this.vpTotal += 6
-//     debugger;
-//   } else if (countProvince === 1) {
-//     var winner = findWinner();
-//     alert("This card has been bought out.");
-//   } else if (this.moneyInHand < 8) {
-//     alert("You don't have enough money in your hand to buy this card.");
-//   } else if (this.buyCount === 0) {
-//     alert("You don't have any buys remaining this turn");
-//   }
-// }
-
-function findWinner() {
-  debugger;
-
+function findWinner(player1VPs,player2VPs,player1Name,player2Name) {
+  if(player1VPs > player2VPs) {
+    alert(player1Name + " is the winner with " + player1VPs + " victory points, over " + player2Name + "'s measly " + player2VPs + " victory points!");
+  } else if (player1VPs < player2VPs) {
+    alert(player2Name + " is the winner with " + player2VPs + " victory points, over " + player1Name + "'s measly " + player1VPs + " victory points!");
+  } else if (player1VPs === player2VPs) {
+    alert("Tie Game! Both players have " + player1VPs + " victory points!")
+  }
 }
 
 Player.prototype.buyMarket = function(allCards) {
@@ -862,4 +859,6 @@ function Game (allCards) {
   this.players = 2;
   this.player1 = new Player("King Arthur",[],[],allCards[3].splice(0,3).concat(allCards[0].splice(0,7)),0,1,0,0,0);
   this.player2 = new Player("Richard the Lionheart",[],[],allCards[3].splice(0,3).concat(allCards[0].splice(0,7)),0,0,0,0,0);
+  this.player1VP = 0;
+  this.player2VP = 0;
 }
