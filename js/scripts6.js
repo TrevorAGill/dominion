@@ -646,6 +646,7 @@ Player.prototype.buyWoodcutter = function(allCards) {
 
 Player.prototype.playWoodcutter = function() {
   debugger;
+  this.actionCount -= 1;
   this.buyCount += 1;
   this.moneyInHand += 2;
 }
@@ -668,7 +669,7 @@ Player.prototype.buySmithy = function(allCards) {
 
 Player.prototype.playSmithy = function() {
   var startingIndex = this.hand.length
-  if(this.deck < 3) {
+  if(this.deck.length < 3) {
     debugger;
     this.shuffler();
   }
