@@ -290,6 +290,8 @@ function countHandMoney(player1Hand) {
   for(i=0 ; i<player1Hand.length ; i++) {
     if(player1Hand[i].name === "Copper" || player1Hand[i].name === "Silver" || player1Hand[i].name === "Gold") {
     moneyInHand += player1Hand[i].value;
+    } else {
+      moneyInHand = moneyInHand + 0;
     }
   }
   debugger;
