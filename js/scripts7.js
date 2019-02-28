@@ -92,6 +92,10 @@ $(document).ready(function(){
       $("#play-woodcutter").click(function() {
         buyCount = actionWoodcutter(buyCount,moneyInHand);
       });
+      
+      $("#play-smithy").click(function() {
+        actionSmithy;
+      });
 
 
 
@@ -594,10 +598,11 @@ function createCards() {
 //
 
 //
-//   function actionSmithy() {
-//     playerHand = playerHand.concat(deck.splice(0,3));
-//     actions -= 1;
-//   }
+   function actionSmithy() {
+     playerHand = playerHand.concat(deck.splice(0,3));
+     actions -= 1;
+     revealCardsInHand(player1Hand)
+   }
   function actionMarket(player1Hand,deck) {
     player1Hand = player1Hand.concat(deck.splice(0,1));
     buys += 1;
